@@ -1,7 +1,10 @@
 import sys
+from dinos.game import Game
+
 
 def main():
-    print("Hello Dinos World!")
+    Game().run()
+
 
 if __name__ == "__main__":
     sys.exit(main())
