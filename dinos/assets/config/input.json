@@ -1,0 +1,6 @@
+{
+    "mode": {
+        "pause": ["escape", "p"],
+        "debug": ["f5"]
+    }
+}

@@ -13,7 +13,7 @@ class StateManager(GameAbstract):
             StateTypes.GamePlay: GamePlay()
         }
 
-        self.__current_state_id = StateTypes.Intro
+        self.__current_state_id = StateTypes.GamePlay
         self.__current_state = self.__states[self.__current_state_id]
         self.__current_state.enter()
 
