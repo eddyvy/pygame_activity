@@ -4,6 +4,7 @@ from dinos.config import Config
 from dinos.modes.mode import Mode
 from dinos.resources.font_manager import FontManager
 from dinos.states.state import StateTypes
+from dinos.ui.fps_stats import FPSStats
 
 
 class GamePlay(State):
@@ -14,6 +15,7 @@ class GamePlay(State):
 
     def enter(self):
         self.done = False
+        self.__fps_stats = FPSStats()
         self.__load_assets()
         self.__mode = Mode()
 
@@ -22,13 +24,17 @@ class GamePlay(State):
 
     def update(self, delta_time):
         if self.__mode.debug:
-            print("Debug mode")
+            self.__fps_stats.update(delta_time)
 
         if self.__mode.pause:
-            print("Pause mode")
+            pass
 
     def render(self, surface):
-        pass
+        if self.__mode.debug:
+            self.__fps_stats.render(surface)
+
+        if self.__mode.pause:
+            pass
 
     def quit(self):
         self.__unload_assets()

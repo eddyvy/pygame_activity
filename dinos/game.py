@@ -23,16 +23,17 @@ class Game:
     def run(self):
         self.__running = True
 
+        time_per_frame = Config.get("timing", "time_per_frame")
         last_time = pygame.time.get_ticks()
         time_since_last_update = 0
         while self.__running:
             delta_time, last_time = self.__calc_delta_time(last_time)
             time_since_last_update += delta_time
-            while time_since_last_update > Config.get("game", "time_per_frame"):
-                time_since_last_update -= Config.get("game", "time_per_frame")
+            while time_since_last_update > time_per_frame:
+                time_since_last_update -= time_per_frame
 
                 self.__process_events()
-                self.__update(Config.get("game", "time_per_frame"))
+                self.__update(time_per_frame)
 
             self.__render()
         self.__quit()
