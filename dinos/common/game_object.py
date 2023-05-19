@@ -1,4 +1,5 @@
 import pygame
+
 from dinos.common.listener_updatable import ListenerUpdatable
 
 

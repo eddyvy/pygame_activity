@@ -1,5 +1,7 @@
 import pygame
+
 from dinos.config import Config
+from dinos.states.state_manager import StateManager
 
 
 class Game:
@@ -12,6 +14,7 @@ class Game:
         pygame.display.set_caption(Config.get("game", "title"))
 
         self.__running = False
+        self.__state_manager = StateManager()
 
     def run(self):
         self.__running = True
@@ -35,15 +38,19 @@ class Game:
             if event.type == pygame.QUIT:
                 self.__running = False
 
+            self.__state_manager.handle_event(event)
+
     def __update(self, delta_time):
-        pass
+        self.__state_manager.update(delta_time)
 
     def __render(self):
         self.__screen.fill(Config.get("game", "background_color"))
+        self.__state_manager.render(self.__screen)
 
         pygame.display.update()
 
     def __quit(self):
+        self.__state_manager.quit()
         pygame.quit()
 
     def __calc_delta_time(self, last_time):
