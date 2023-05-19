@@ -1,6 +1,6 @@
 from sre_parse import State
 
-from dinos.states.state_types import StateTypes
+from dinos.states.state import StateTypes
 
 
 class Intro(State):

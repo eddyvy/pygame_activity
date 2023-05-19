@@ -2,7 +2,7 @@
 from dinos.common.game_abstract import GameAbstract
 from dinos.states.game_play import GamePlay
 from dinos.states.intro import Intro
-from dinos.states.state_types import StateTypes
+from dinos.states.state import StateTypes
 
 
 class StateManager(GameAbstract):

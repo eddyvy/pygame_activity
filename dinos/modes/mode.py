@@ -2,13 +2,13 @@ from dinos.common.game_abstract import EventHandler
 from dinos.common.input_key_map import InputKeyMap
 
 
-class ModeManager(EventHandler):
-    __INPUTS_CONFIG = "mode"
+class Mode(EventHandler):
+
     __DEBUG = "debug"
     __PAUSE = "pause"
 
     def __init__(self):
-        self.__inputs = InputKeyMap(self.__INPUTS_CONFIG)
+        self.__inputs = InputKeyMap("mode")
         self.debug = False
         self.pause = False
 

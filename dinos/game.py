@@ -1,6 +1,8 @@
 import pygame
 
 from dinos.config import Config
+from dinos.resources.font_manager import FontManager
+from dinos.states.state import StateTypes
 from dinos.states.state_manager import StateManager
 
 
@@ -14,6 +16,8 @@ class Game:
         pygame.display.set_caption(Config.get("game", "title"))
 
         self.__running = False
+
+        self.__load_assets()
         self.__state_manager = StateManager()
 
     def run(self):
@@ -57,3 +61,15 @@ class Game:
         current = pygame.time.get_ticks()
         delta = current - last_time
         return delta, current
+
+    def __load_assets(self):
+        font_data = Config.get("fonts", "main")
+        FontManager.instance().load(
+            StateTypes.Global,
+            font_data["name"],
+            font_data["file"],
+            font_data["size"]
+        )
+
+    def __unload_assets(self):
+        FontManager.instance().clean(StateTypes.Global)

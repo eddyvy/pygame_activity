@@ -1,7 +1,9 @@
 from sre_parse import State
-from dinos.modes.mode_manager import ModeManager
+from dinos.config import Config
 
-from dinos.states.state_types import StateTypes
+from dinos.modes.mode import Mode
+from dinos.resources.font_manager import FontManager
+from dinos.states.state import StateTypes
 
 
 class GamePlay(State):
@@ -13,7 +15,7 @@ class GamePlay(State):
     def enter(self):
         self.done = False
         self.__load_assets()
-        self.__mode = ModeManager()
+        self.__mode = Mode()
 
     def handle_event(self, event):
         self.__mode.handle_event(event)

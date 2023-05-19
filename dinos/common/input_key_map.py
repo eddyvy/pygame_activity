@@ -6,11 +6,10 @@ from dinos.config import Config
 
 
 class InputKeyMap():
-    __INPUT_CONFIG = "input"
 
     def __init__(self, input_keys_name):
         self.__actions_key_map = {}
-        actions_keys = Config.get(self.__INPUT_CONFIG, input_keys_name)
+        actions_keys = Config.get("input", input_keys_name)
 
         for action, keys in actions_keys.items():
             key_codes = []

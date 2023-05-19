@@ -1,5 +1,13 @@
 from abc import abstractmethod
+from enum import Enum
+
 from dinos.common.game_abstract import GameAbstract
+
+
+class StateTypes(Enum):
+    Global = 0,
+    Intro = 1,
+    GamePlay = 2
 
 
 class State(GameAbstract):
