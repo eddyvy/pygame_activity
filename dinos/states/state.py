@@ -1,9 +1,8 @@
 from abc import abstractmethod
+from dinos.common.game_abstract import GameAbstract
 
-from dinos.common.listener_updatable import ListenerUpdatable
 
-
-class State(ListenerUpdatable):
+class State(GameAbstract):
 
     def __init__(self):
         self.done = False

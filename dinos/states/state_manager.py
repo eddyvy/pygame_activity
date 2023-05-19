@@ -1,11 +1,11 @@
 
-from dinos.common.listener_updatable import ListenerUpdatable
+from dinos.common.game_abstract import GameAbstract
 from dinos.states.game_play import GamePlay
 from dinos.states.intro import Intro
 from dinos.states.state_types import StateTypes
 
 
-class StateManager(ListenerUpdatable):
+class StateManager(GameAbstract):
 
     def __init__(self):
         self.__states = {

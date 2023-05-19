@@ -1,9 +1,9 @@
 import pygame
 
-from dinos.common.listener_updatable import ListenerUpdatable
+from dinos.common.game_abstract import GameAbstract
 
 
-class GameObject(pygame.sprite.Sprite, ListenerUpdatable):
+class GameObject(pygame.sprite.Sprite, GameAbstract):
 
     def __init__(self):
         super().__init__()
