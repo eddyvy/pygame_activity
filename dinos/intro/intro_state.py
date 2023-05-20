@@ -18,10 +18,9 @@ class IntroState(State):
 
     def enter(self):
         self.done = False
-        self.__music_name = Config.get("intro", "music")
 
         self.__load_assets()
-        SoundPlayer.instance().play_music(self.__STATE, self.__music_name)
+        SoundPlayer.instance().play_music(self.__STATE, Config.get("intro", "music"))
         self.__menu = IntroMenu(self.__accept, self.__exit)
 
     def handle_event(self, event):
@@ -38,14 +37,9 @@ class IntroState(State):
         self.__menu.quit()
 
     def __load_assets(self):
-        AssetManager.instance().music.load(
-            self.__STATE,
-            self.__music_name
-        )
-        AssetManager.instance().sfx.load(
-            self.__STATE,
-            Config.get("intro", "sfx_select")
-        )
+        AssetManager.instance().font.load(self.__STATE, Config.get("intro", "font"))
+        AssetManager.instance().music.load(self.__STATE, Config.get("intro", "music"))
+        AssetManager.instance().sfx.load(self.__STATE, Config.get("intro", "sfx_select"))
 
     def __unload_assets(self):
         AssetManager.instance().clean(self.__STATE)

@@ -19,8 +19,9 @@ class SoundPlayer:
             raise Exception("There Can Be Only One SoundManager!!!")
 
         SoundPlayer.__instance = self
-        self.__sound_volume = Config.get("sound", "sfx", "volume")
-        self.__music_volume = Config.get("sound", "music", "volume")
+        self.__sound_volume = Config.get("assets", "sfx", "globals", "volume")
+        self.__music_volume = Config.get(
+            "assets", "music", "globals", "volume")
 
         self.__current_music = None
         self.__next_music = None
@@ -49,7 +50,8 @@ class SoundPlayer:
             return
 
         self.__next_music = state, name
-        pygame.music.mixer.fadeout(Config.get("sound", "music", "fadeout"))
+        pygame.music.mixer.fadeout(Config.get(
+            "assets", "music", "globals", "fadeout"))
 
     def update(self, delta_time):
         if self.__next_music is None or pygame.mixer.music.get_busy():

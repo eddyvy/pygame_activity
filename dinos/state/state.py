@@ -5,7 +5,6 @@ from dinos.common.game_abstract import GameAbstract
 
 
 class StateTypes(Enum):
-    Global = 0,
     Intro = 1,
     GamePlay = 2
 

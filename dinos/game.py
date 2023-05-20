@@ -18,7 +18,6 @@ class Game:
 
         self.__running = False
 
-        self.__load_assets()
         self.__state_manager = StateManager()
 
     def run(self):
@@ -58,19 +57,9 @@ class Game:
     def __quit(self):
         self.__state_manager.quit()
         SoundPlayer.instance().stop_music()
-        self.__unload_assets()
         pygame.quit()
 
     def __calc_delta_time(self, last_time):
         current = pygame.time.get_ticks()
         delta = current - last_time
         return delta, current
-
-    def __load_assets(self):
-        AssetManager.instance().font.load(
-            StateTypes.Global,
-            Config.get("game", "global_font")
-        )
-
-    def __unload_assets(self):
-        AssetManager.instance().clean(StateTypes.Global)

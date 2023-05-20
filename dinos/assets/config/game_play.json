@@ -1,0 +1,9 @@
+{
+  "fps_stats": {
+    "fps": 60,
+    "time_per_frame": 16,
+    "refresh_update_time": 1000,
+    "fps_pos": [70, 20],
+    "fps_font": "main"
+  }
+}

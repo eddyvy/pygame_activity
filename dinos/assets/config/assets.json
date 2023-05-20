@@ -1,7 +1,15 @@
 {
+  "fonts": {
+    "main": {
+      "file": ["dinos.assets.fonts", "Sansation.ttf"],
+      "size": 20
+    }
+  },
   "music": {
-    "volume": 0.4,
-    "fadeout": 200,
+    "globals": {
+      "volume": 0.4,
+      "fadeout": 200
+    },
     "intro": {
       "file": ["dinos.assets.music", "intro_music.mp3"]
     },
@@ -10,7 +18,10 @@
     }
   },
   "sfx": {
-    "volume": 0.8,
+    "globals": {
+      "volume": 0.8,
+      "fadeout": 200
+    },
     "select": {
       "file": ["dinos.assets.sfx", "select_sound.wav"]
     }

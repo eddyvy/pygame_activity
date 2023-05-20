@@ -1,3 +1,4 @@
+from enum import Enum
 from importlib import resources
 from os import path
 
@@ -9,7 +10,7 @@ from dinos.resources.asset_manager_abstract import AssetManagerAbstract
 
 class SfxManager(AssetManagerAbstract):
 
-    __CONFIG_FILE = "sound", "sfx"
+    __CONFIG_FILE = "assets", "sfx"
 
     def __init__(self):
         super().__init__()

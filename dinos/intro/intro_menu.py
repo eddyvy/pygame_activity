@@ -17,10 +17,10 @@ class IntroMenu(GameAbstract):
         self.__inputs = InputKeyMap("select")
 
         font = AssetManager.instance().font.get(
-            StateTypes.Global,
+            StateTypes.Intro,
             Config.get("intro", "font")
         )
-        text = Config.get("intro", "text_en")
+        text = Config.get("intro", "text", Config.get("game", "language"))
         pos = Config.get("intro", "positions")
         fg_c = Config.get("game", "foreground_color")
         bg_c = Config.get("game", "background_color")

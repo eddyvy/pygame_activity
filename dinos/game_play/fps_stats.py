@@ -13,8 +13,8 @@ class FPSStats(Updatable, Renderable):
         self.__update_time = 0
 
         font = AssetManager.instance().font.get(
-            StateTypes.Global,
-            Config.get("timing", "fps_font")
+            StateTypes.GamePlay,
+            Config.get("game_play", "fps_stats", "fps_font")
         )
 
         self.__label = UILabel(

@@ -1,4 +1,8 @@
 {
+  "font": "main",
+  "music": "intro",
+  "sfx_select": "select",
+  "highlight_color": [0, 100, 255],
   "positions": {
     "title": [480, 140],
     "start": [480, 220],
@@ -6,14 +10,12 @@
     "score_text": [480, 40],
     "score": [480, 60]
   },
-  "font": "main",
-  "highlight_color": [0, 100, 255],
-  "music": "intro",
-  "sfx_select": "select",
-  "text_en": {
-    "title": "DINOS SURVIVAL",
-    "start": "Start Game",
-    "exit": "Exit Game",
-    "score_text": "BEST SCORE"
+  "text": {
+    "en": {
+      "title": "DINOS SURVIVAL",
+      "start": "Start Game",
+      "exit": "Exit Game",
+      "score_text": "BEST SCORE"
+    }
   }
 }
