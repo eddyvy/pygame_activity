@@ -4,10 +4,14 @@
     "time_per_frame": 16,
     "refresh_update_time": 1000,
     "fps_pos": [70, 20],
-    "fps_font": "main",
-    "fps_font_size": 20
+    "fps_font": "main"
   },
   "environment": {
-    "ground_height": 40
+    "ground_height": 500
+  },
+  "hero": {
+    "spritesheet": "hero",
+    "animations": "hero",
+    "inflate_collider": [-0.7, -0.1]
   }
 }

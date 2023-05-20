@@ -2,12 +2,16 @@
   "fonts": {
     "main": {
       "file": ["dinos.assets.fonts", "Sansation.ttf"],
-      "size": 20
+      "font_size": 20
     }
   },
-  "image": {
+  "image": {},
+  "spritesheet": {
     "hero": {
-      "file": ["dinos.assets.images", "hero_spritesheet.png"]
+      "file": ["dinos.assets.images", "hero_spritesheet.png"],
+      "rows": 7,
+      "cols": 8,
+      "scale": 2.5
     }
   },
   "music": {

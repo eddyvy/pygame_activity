@@ -6,5 +6,5 @@ class MusicManager(AssetManagerAbstract):
     def __init__(self):
         super().__init__(("assets", "music"))
 
-    def _load_asset(self, asset_path, options={}):
+    def _load_asset(self, asset_path, asset_name, options={}):
         return asset_path

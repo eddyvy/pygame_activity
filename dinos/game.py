@@ -23,7 +23,7 @@ class Game:
     def run(self):
         self.__running = True
 
-        time_per_frame = Config.get("timing", "time_per_frame")
+        time_per_frame = Config.get("game", "time_per_frame")
         last_time = pygame.time.get_ticks()
         time_since_last_update = 0
         while self.__running:

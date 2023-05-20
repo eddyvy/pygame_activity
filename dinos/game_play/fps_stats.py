@@ -17,13 +17,13 @@ class FPSStats(Updatable, Renderable):
         self.__label = UILabel(
             font,
             "0 - 0",
-            Config.get("timing", "fps_pos"),
+            Config.get("game_play", "fps_stats", "fps_pos"),
             Config.get("game", "foreground_color"),
             Config.get("game", "background_color")
         )
 
         self.__refresh_update_time = Config.get(
-            "timing", "refresh_update_time")
+            "game_play", "fps_stats", "refresh_update_time")
 
     def update(self, delta_time):
         self.__update_time += delta_time

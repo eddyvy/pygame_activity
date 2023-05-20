@@ -13,7 +13,7 @@ class AssetManagerAbstract(ABC):
         self.__config_file = config_file
 
     @abstractmethod
-    def _load_asset(self, asset_path, options={}):
+    def _load_asset(self, asset_path, asset_name, options={}):
         pass
 
     def load(self, state, asset_name, options={}):
@@ -25,7 +25,7 @@ class AssetManagerAbstract(ABC):
         with resources.path(*Config.get(*self.__config_file, asset_name, "file")) as asset_path:
             if path.isfile(asset_path) and asset_name not in self.__assets:
                 self.__assets[asset_name] = self._load_asset(
-                    asset_path, options)
+                    asset_path, asset_name, options)
 
     def get(self, asset_name):
         return self.__assets[asset_name]

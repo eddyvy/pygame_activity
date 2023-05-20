@@ -3,5 +3,6 @@
   "background_color": [0, 0, 0],
   "foreground_color": [255, 255, 255],
   "title": "Dinos Games",
-  "language": "en"
+  "language": "en",
+  "time_per_frame": 16
 }
