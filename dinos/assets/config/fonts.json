@@ -1,6 +1,5 @@
 {
   "main": {
-    "name": "main",
     "file": ["dinos.assets.fonts", "Sansation.ttf"],
     "size": 20
   }

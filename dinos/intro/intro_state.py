@@ -1,12 +1,16 @@
 from sre_parse import State
 
 import pygame
+from dinos.config import Config
 from dinos.intro.intro_menu import IntroMenu
+from dinos.resources.asset_manager import AssetManager
+from dinos.resources.sound_player import SoundPlayer
 
 from dinos.state.state import StateTypes
 
 
 class IntroState(State):
+    __STATE = StateTypes.Intro
 
     def __init__(self):
         super().__init__()
@@ -14,13 +18,17 @@ class IntroState(State):
 
     def enter(self):
         self.done = False
-        self.__menu = IntroMenu(self.__accept, self.__exit)
+        self.__music_name = Config.get("intro", "music")
+
         self.__load_assets()
+        SoundPlayer.instance().play_music(self.__STATE, self.__music_name)
+        self.__menu = IntroMenu(self.__accept, self.__exit)
 
     def handle_event(self, event):
         self.__menu.handle_event(event)
 
     def update(self, delta_time):
+        SoundPlayer.instance().update(delta_time)
         self.__menu.update(delta_time)
 
     def render(self, surface):
@@ -28,13 +36,19 @@ class IntroState(State):
 
     def quit(self):
         self.__menu.quit()
-        self.__unload_assets()
 
     def __load_assets(self):
-        pass
+        AssetManager.instance().music.load(
+            self.__STATE,
+            self.__music_name
+        )
+        AssetManager.instance().sfx.load(
+            self.__STATE,
+            Config.get("intro", "sfx_select")
+        )
 
     def __unload_assets(self):
-        pass
+        AssetManager.instance().clean(self.__STATE)
 
     def __accept(self):
         self.done = True

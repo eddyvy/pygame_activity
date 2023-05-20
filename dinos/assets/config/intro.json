@@ -6,7 +6,10 @@
     "score_text": [480, 40],
     "score": [480, 60]
   },
+  "font": "main",
   "highlight_color": [0, 100, 255],
+  "music": "intro",
+  "sfx_select": "select",
   "text_en": {
     "title": "DINOS SURVIVAL",
     "start": "Start Game",

@@ -2,38 +2,28 @@ from importlib import resources
 from os import path
 
 import pygame
+from dinos.config import Config
+
+from dinos.resources.asset_manager_abstract import AssetManagerAbstract
 
 
-class FontManager:
+class FontManager(AssetManagerAbstract):
 
-    __instance = None
-
-    @staticmethod
-    def instance():
-        if FontManager.__instance is None:
-            FontManager()
-        return FontManager.__instance
+    __CONFIG_FILE = "fonts"
 
     def __init__(self):
-        if not FontManager.__instance is None:
-            raise Exception("There Can Be Only One FontManager!!!")
+        super().__init__()
 
-        FontManager.__instance = self
-        self.__fonts = {}
+    def load(self, state, asset_name, options={}):
+        if not state in self._assets:
+            self._assets[state] = {}
 
-    def load(self, state, font_name, font_filepath, font_size):
-        if not state in self.__fonts:
-            self.__fonts[state] = {}
+        fontsize = options["font_size"] if "font_size" in options else Config.get(
+            self.__CONFIG_FILE, asset_name, "size")
 
-        with resources.path(font_filepath[0], font_filepath[1]) as font_path:
-            if path.isfile(font_path) and font_name not in self.__fonts[state]:
-                self.__fonts[state][font_name] = pygame.font.Font(
-                    font_path,
-                    font_size
+        with resources.path(*Config.get(self.__CONFIG_FILE, asset_name, "file")) as asset_path:
+            if path.isfile(asset_path) and asset_name not in self._assets[state]:
+                self._assets[state][asset_name] = pygame.font.Font(
+                    asset_path,
+                    fontsize
                 )
-
-    def get(self, state, font_name):
-        return self.__fonts[state][font_name]
-
-    def clean(self, state):
-        del self.__fonts[state]

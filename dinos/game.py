@@ -1,7 +1,8 @@
 import pygame
 
 from dinos.config import Config
-from dinos.resources.font_manager import FontManager
+from dinos.resources.asset_manager import AssetManager
+from dinos.resources.sound_player import SoundPlayer
 from dinos.state.state import StateTypes
 from dinos.state.state_manager import StateManager
 
@@ -56,6 +57,7 @@ class Game:
 
     def __quit(self):
         self.__state_manager.quit()
+        SoundPlayer.instance().stop_music()
         self.__unload_assets()
         pygame.quit()
 
@@ -65,13 +67,10 @@ class Game:
         return delta, current
 
     def __load_assets(self):
-        font_data = Config.get("fonts", "main")
-        FontManager.instance().load(
+        AssetManager.instance().font.load(
             StateTypes.Global,
-            font_data["name"],
-            font_data["file"],
-            font_data["size"]
+            Config.get("game", "global_font")
         )
 
     def __unload_assets(self):
-        FontManager.instance().clean(StateTypes.Global)
+        AssetManager.instance().clean(StateTypes.Global)

@@ -2,5 +2,6 @@
   "screen_size": [960, 540],
   "background_color": [0, 0, 0],
   "foreground_color": [255, 255, 255],
-  "title": "Dinos Games"
+  "title": "Dinos Games",
+  "global_font": "main"
 }

@@ -1,6 +1,6 @@
 from dinos.common.game_abstract import Renderable, Updatable
 from dinos.config import Config
-from dinos.resources.font_manager import FontManager
+from dinos.resources.asset_manager import AssetManager
 from dinos.state.state import StateTypes
 from dinos.ui.label import UILabel
 
@@ -12,9 +12,9 @@ class FPSStats(Updatable, Renderable):
         self.__render_frames = 0
         self.__update_time = 0
 
-        font = FontManager.instance().get(
+        font = AssetManager.instance().font.get(
             StateTypes.Global,
-            Config.get("fonts", "main", "name")
+            Config.get("timing", "fps_font")
         )
 
         self.__label = UILabel(

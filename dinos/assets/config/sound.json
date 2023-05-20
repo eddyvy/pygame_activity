@@ -1,0 +1,18 @@
+{
+  "music": {
+    "volume": 0.4,
+    "fadeout": 200,
+    "intro": {
+      "file": ["dinos.assets.music", "intro_music.mp3"]
+    },
+    "gampe_play": {
+      "file": ["dinos.assets.music", "gampe_play_music.mp3"]
+    }
+  },
+  "sfx": {
+    "volume": 0.8,
+    "select": {
+      "file": ["dinos.assets.sfx", "select_sound.wav"]
+    }
+  }
+}
