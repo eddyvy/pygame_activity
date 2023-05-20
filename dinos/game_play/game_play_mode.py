@@ -2,7 +2,7 @@ from dinos.common.game_abstract import EventHandler
 from dinos.common.input_key_map import InputKeyMap
 
 
-class Mode(EventHandler):
+class GamePlayMode(EventHandler):
 
     __DEBUG = "debug"
     __PAUSE = "pause"

@@ -1,13 +1,11 @@
 from sre_parse import State
-from dinos.config import Config
 
-from dinos.modes.mode import Mode
-from dinos.resources.font_manager import FontManager
-from dinos.states.state import StateTypes
-from dinos.ui.fps_stats import FPSStats
+from dinos.game_play.game_play_mode import GamePlayMode
+from dinos.state.state import StateTypes
+from dinos.game_play.fps_stats import FPSStats
 
 
-class GamePlay(State):
+class GamePlayState(State):
 
     def __init__(self):
         super().__init__()
@@ -17,7 +15,7 @@ class GamePlay(State):
         self.done = False
         self.__fps_stats = FPSStats()
         self.__load_assets()
-        self.__mode = Mode()
+        self.__mode = GamePlayMode()
 
     def handle_event(self, event):
         self.__mode.handle_event(event)

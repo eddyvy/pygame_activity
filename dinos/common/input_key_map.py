@@ -1,5 +1,3 @@
-from abc import ABC
-
 import pygame
 
 from dinos.config import Config

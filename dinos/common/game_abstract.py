@@ -23,7 +23,7 @@ class Updatable(ABC):
 
 class Renderable(ABC):
     @abstractmethod
-    def render(self, event):
+    def render(self, surface):
         pass
 
     @abstractmethod

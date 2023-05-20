@@ -1,0 +1,16 @@
+{
+  "positions": {
+    "title": [480, 140],
+    "start": [480, 220],
+    "exit": [480, 280],
+    "score_text": [480, 40],
+    "score": [480, 60]
+  },
+  "highlight_color": [0, 100, 255],
+  "text_en": {
+    "title": "DINOS SURVIVAL",
+    "start": "Start Game",
+    "exit": "Exit Game",
+    "score_text": "BEST SCORE"
+  }
+}

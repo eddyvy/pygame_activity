@@ -12,8 +12,8 @@ class GameObject(pygame.sprite.Sprite, GameAbstract):
         self.rect = pygame.Rect(0, 0, 0, 0)
         self.render_rect = pygame.Rect(0, 0, 0, 0)
 
-    def render(self, surface_dst):
-        surface_dst.blit(self.image, self.render_rect, self.rect)
+    def render(self, surface):
+        surface.blit(self.image, self.render_rect, self.rect)
 
     def _center(self):
         self.rect.center = self.position.xy

@@ -2,7 +2,6 @@
   "main": {
     "name": "main",
     "file": ["dinos.assets.fonts", "Sansation.ttf"],
-    "size": 20,
-    "color": [255, 255, 255]
+    "size": 20
   }
 }

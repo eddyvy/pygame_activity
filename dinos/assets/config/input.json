@@ -1,6 +1,11 @@
 {
-    "mode": {
-        "pause": ["escape", "p"],
-        "debug": ["f5"]
-    }
+  "mode": {
+    "pause": ["escape", "p"],
+    "debug": ["f5"]
+  },
+  "select": {
+    "up": ["w", "up"],
+    "down": ["s", "down"],
+    "accept": ["space", "return"]
+  }
 }

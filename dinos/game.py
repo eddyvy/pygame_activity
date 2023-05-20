@@ -2,8 +2,8 @@ import pygame
 
 from dinos.config import Config
 from dinos.resources.font_manager import FontManager
-from dinos.states.state import StateTypes
-from dinos.states.state_manager import StateManager
+from dinos.state.state import StateTypes
+from dinos.state.state_manager import StateManager
 
 
 class Game:
@@ -56,6 +56,7 @@ class Game:
 
     def __quit(self):
         self.__state_manager.quit()
+        self.__unload_assets()
         pygame.quit()
 
     def __calc_delta_time(self, last_time):

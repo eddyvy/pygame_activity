@@ -1,19 +1,19 @@
 
 from dinos.common.game_abstract import GameAbstract
-from dinos.states.game_play import GamePlay
-from dinos.states.intro import Intro
-from dinos.states.state import StateTypes
+from dinos.game_play.game_play_state import GamePlayState
+from dinos.intro.intro_state import IntroState
+from dinos.state.state import StateTypes
 
 
 class StateManager(GameAbstract):
 
     def __init__(self):
         self.__states = {
-            StateTypes.Intro: Intro(),
-            StateTypes.GamePlay: GamePlay()
+            StateTypes.Intro: IntroState(),
+            StateTypes.GamePlay: GamePlayState()
         }
 
-        self.__current_state_id = StateTypes.GamePlay
+        self.__current_state_id = StateTypes.Intro
         self.__current_state = self.__states[self.__current_state_id]
         self.__current_state.enter()
 
@@ -34,9 +34,9 @@ class StateManager(GameAbstract):
     def __change_state(self):
         self.__current_state.quit()
 
-        previous_state = self.__current_state_name
-        self.__current_state_name = self.__current_state.next_state
-        self.__current_state = self.__states[self.__current_state_name]
+        previous_state = self.__current_state_id
+        self.__current_state_id = self.__current_state.next_state
+        self.__current_state = self.__states[self.__current_state_id]
         self.__current_state.previous_state = previous_state
 
         self.__current_state.enter()
