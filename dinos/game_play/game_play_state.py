@@ -8,6 +8,7 @@ from dinos.game_play.fps_stats import FPSStats
 
 
 class GamePlayState(State):
+    __STATE = StateTypes.GamePlay
 
     def __init__(self):
         super().__init__()
@@ -43,8 +44,10 @@ class GamePlayState(State):
 
     def __load_assets(self):
         AssetManager.instance().font.load(
-            StateTypes.GamePlay,
-            Config.get("game_play", "fps_stats", "fps_font")
+            self.__STATE,
+            Config.get("game_play", "fps_stats", "fps_font"),
+            {"font_size": Config.get(
+                "game_play", "fps_stats", "fps_font_size")}
         )
 
     def __unload_assets(self):

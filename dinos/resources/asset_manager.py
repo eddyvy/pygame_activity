@@ -1,9 +1,8 @@
 from importlib import resources
 from os import path
 
-import pygame
-
 from dinos.resources.font_manager import FontManager
+from dinos.resources.image_manager import ImageManager
 from dinos.resources.music_manager import MusicManager
 from dinos.resources.sfx_manager import SfxManager
 
@@ -24,10 +23,12 @@ class AssetManager:
         AssetManager.__instance = self
 
         self.font = FontManager()
+        self.image = ImageManager()
         self.music = MusicManager()
         self.sfx = SfxManager()
 
     def clean(self, state):
         self.font.clean(state)
+        self.image.clean(state)
         self.music.clean(state)
         self.sfx.clean(state)

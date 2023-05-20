@@ -1,5 +1,6 @@
 {
   "font": "main",
+  "font_size": 20,
   "music": "intro",
   "sfx_select": "select",
   "highlight_color": [0, 100, 255],

@@ -5,6 +5,11 @@
       "size": 20
     }
   },
+  "image": {
+    "hero": {
+      "file": ["dinos.assets.images", "hero_spritesheet.png"]
+    }
+  },
   "music": {
     "globals": {
       "volume": 0.4,

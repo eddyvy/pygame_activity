@@ -26,16 +26,16 @@ class SoundPlayer:
         self.__current_music = None
         self.__next_music = None
 
-    def play_sound(self, state, name):
-        sound = AssetManager.instance().sfx.get(state, name)
+    def play_sound(self, name):
+        sound = AssetManager.instance().sfx.get(name)
         sound.set_volume(self.__sound_volume)
         sound.play()
 
-    def play_music(self, state, name):
+    def play_music(self, name):
         if name is self.__current_music:
             return
 
-        music_filepath = AssetManager.instance().music.get(state, name)
+        music_filepath = AssetManager.instance().music.get(name)
         pygame.mixer.music.load(music_filepath)
         pygame.mixer.music.set_volume(self.__music_volume)
         self.__current_music = name
@@ -45,11 +45,11 @@ class SoundPlayer:
         pygame.mixer.music.fadeout(time)
         self.__current_music = None
 
-    def play_music_fade(self, state, name):
+    def play_music_fade(self, name):
         if name is self.__current_music:
             return
 
-        self.__next_music = state, name
+        self.__next_music = name
         pygame.music.mixer.fadeout(Config.get(
             "assets", "music", "globals", "fadeout"))
 

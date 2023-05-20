@@ -20,24 +20,29 @@ class IntroState(State):
         self.done = False
 
         self.__load_assets()
-        SoundPlayer.instance().play_music(self.__STATE, Config.get("intro", "music"))
         self.__menu = IntroMenu(self.__accept, self.__exit)
+        SoundPlayer.instance().play_music(Config.get("intro", "music"))
 
     def handle_event(self, event):
         self.__menu.handle_event(event)
 
     def update(self, delta_time):
-        SoundPlayer.instance().update(delta_time)
         self.__menu.update(delta_time)
+        SoundPlayer.instance().update(delta_time)
 
     def render(self, surface):
         self.__menu.render(surface)
 
     def quit(self):
         self.__menu.quit()
+        self.__unload_assets()
 
     def __load_assets(self):
-        AssetManager.instance().font.load(self.__STATE, Config.get("intro", "font"))
+        AssetManager.instance().font.load(
+            self.__STATE,
+            Config.get("intro", "font"),
+            {"font_size": Config.get("intro", "font_size")}
+        )
         AssetManager.instance().music.load(self.__STATE, Config.get("intro", "music"))
         AssetManager.instance().sfx.load(self.__STATE, Config.get("intro", "sfx_select"))
 

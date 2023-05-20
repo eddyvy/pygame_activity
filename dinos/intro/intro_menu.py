@@ -3,7 +3,6 @@ from dinos.common.input_key_map import InputKeyMap
 from dinos.config import Config
 from dinos.resources.asset_manager import AssetManager
 from dinos.resources.sound_player import SoundPlayer
-from dinos.state.state import StateTypes
 from dinos.ui.label import UILabel
 from dinos.ui.label_selectable import UILabelSelectable
 
@@ -16,10 +15,7 @@ class IntroMenu(GameAbstract):
 
         self.__inputs = InputKeyMap("select")
 
-        font = AssetManager.instance().font.get(
-            StateTypes.Intro,
-            Config.get("intro", "font")
-        )
+        font = AssetManager.instance().font.get(Config.get("intro", "font"))
         text = Config.get("intro", "text", Config.get("game", "language"))
         pos = Config.get("intro", "positions")
         fg_c = Config.get("game", "foreground_color")
@@ -45,15 +41,13 @@ class IntroMenu(GameAbstract):
             if self.__start_game.is_selected:
                 return
             self.__select_start()
-            SoundPlayer.instance().play_sound(
-                StateTypes.Intro, Config.get("intro", "sfx_select"))
+            SoundPlayer.instance().play_sound(Config.get("intro", "sfx_select"))
 
         if self.__inputs.is_pressed(event, "down"):
             if self.__exit_game.is_selected:
                 return
             self.__select_exit()
-            SoundPlayer.instance().play_sound(
-                StateTypes.Intro, Config.get("intro", "sfx_select"))
+            SoundPlayer.instance().play_sound(Config.get("intro", "sfx_select"))
 
         if self.__inputs.is_pressed(event, "accept"):
             self.__option_selected = True
