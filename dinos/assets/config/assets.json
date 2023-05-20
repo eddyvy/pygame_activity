@@ -29,8 +29,8 @@
     "intro": {
       "file": ["dinos.assets.music", "intro_music.mp3"]
     },
-    "gampe_play": {
-      "file": ["dinos.assets.music", "gampe_play_music.mp3"]
+    "game_play": {
+      "file": ["dinos.assets.music", "game_play_music.mp3"]
     }
   },
   "sfx": {

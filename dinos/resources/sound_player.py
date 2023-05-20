@@ -50,7 +50,7 @@ class SoundPlayer:
             return
 
         self.__next_music = name
-        pygame.music.mixer.fadeout(Config.get(
+        pygame.mixer.music.fadeout(Config.get(
             "assets", "music", "globals", "fadeout"))
 
     def update(self, delta_time):

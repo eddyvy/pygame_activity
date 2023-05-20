@@ -6,6 +6,7 @@ from dinos.environment.platform import Platform
 from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.hero.hero import Hero
 from dinos.resources.asset_manager import AssetManager
+from dinos.resources.sound_player import SoundPlayer
 from dinos.state.state import StateTypes
 from dinos.game_play.fps_stats import FPSStats
 
@@ -31,6 +32,7 @@ class GamePlayState(State):
             Config.get("game_play", "environment", "ground", "tiles_width")
         )
         self.__entities.add(Hero())
+        SoundPlayer.instance().play_music_fade(Config.get("game_play", "music"))
 
     def handle_event(self, event):
         self.__mode.handle_event(event)
@@ -41,6 +43,7 @@ class GamePlayState(State):
         self.__entities.handle_event(event)
 
     def update(self, delta_time):
+        SoundPlayer.instance().update(delta_time)
         if self.__mode.debug:
             self.__fps_stats.update(delta_time)
 
@@ -60,6 +63,7 @@ class GamePlayState(State):
         self.__entities.render(surface)
 
     def quit(self):
+        SoundPlayer.instance().stop_music()
         self.__entities.empty()
         self.__mode.quit()
         self.__fps_stats.quit()
@@ -69,6 +73,10 @@ class GamePlayState(State):
         AssetManager.instance().font.load(
             self.__STATE,
             Config.get("game_play", "fps_stats", "fps_font")
+        )
+        AssetManager.instance().music.load(
+            self.__STATE,
+            Config.get("game_play", "music")
         )
         AssetManager.instance().spritesheet.load(
             self.__STATE,

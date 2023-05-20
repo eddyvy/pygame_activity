@@ -1,4 +1,5 @@
 {
+  "music": "game_play",
   "fps_stats": {
     "fps": 60,
     "time_per_frame": 16,
