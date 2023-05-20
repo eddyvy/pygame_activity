@@ -1,6 +1,7 @@
 from sre_parse import State
 from dinos.common.render_group import RenderGroup
 from dinos.config import Config
+from dinos.environment.platform import Platform
 
 from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.hero.hero import Hero
@@ -16,6 +17,7 @@ class GamePlayState(State):
         super().__init__()
         self.next_state = StateTypes.Intro
 
+        self.__platforms = RenderGroup()
         self.__entities = RenderGroup()
 
     def enter(self):
@@ -24,6 +26,10 @@ class GamePlayState(State):
         self.__mode = GamePlayMode()
         self.__fps_stats = FPSStats()
 
+        self.__ground = Platform(
+            Config.get("game_play", "environment", "ground", "position"),
+            Config.get("game_play", "environment", "ground", "tiles_width")
+        )
         self.__entities.add(Hero())
 
     def handle_event(self, event):
@@ -48,8 +54,9 @@ class GamePlayState(State):
             self.__fps_stats.render(surface)
 
         if self.__mode.pause:
-            return
+            pass
 
+        self.__ground.render(surface)
         self.__entities.render(surface)
 
     def quit(self):
@@ -66,6 +73,10 @@ class GamePlayState(State):
         AssetManager.instance().spritesheet.load(
             self.__STATE,
             Config.get("game_play", "hero", "spritesheet")
+        )
+        AssetManager.instance().spritesheet.load(
+            self.__STATE,
+            Config.get("game_play", "environment", "ground", "spritesheet")
         )
 
     def __unload_assets(self):

@@ -12,6 +12,13 @@
       "rows": 7,
       "cols": 8,
       "scale": 2.5
+    },
+    "ground": {
+      "file": ["dinos.assets.images", "ground.png"],
+      "rows": 1,
+      "cols": 3,
+      "scale": 1.5,
+      "b_color": [255, 255, 255]
     }
   },
   "music": {

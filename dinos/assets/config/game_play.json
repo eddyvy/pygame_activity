@@ -6,12 +6,19 @@
     "fps_pos": [70, 20],
     "fps_font": "main"
   },
-  "environment": {
-    "ground_height": 500
-  },
   "hero": {
     "spritesheet": "hero",
     "animations": "hero",
     "inflate_collider": [-0.7, -0.1]
+  },
+  "environment": {
+    "ground": {
+      "spritesheet": "ground",
+      "border_left": 0,
+      "central": 1,
+      "border_right": 2,
+      "position": [480, 530],
+      "tiles_width": 21
+    }
   }
 }

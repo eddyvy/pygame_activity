@@ -22,7 +22,7 @@ class Hero(GameObject):
 
         self._position = pygame.math.Vector2(
             Config.get("game", "screen_size")[0]/2,
-            Config.get("game_play", "environment", "ground_height") - clip.h
+            500 - clip.h
         )
 
         infco = Config.get("game_play", "hero", "inflate_collider")
