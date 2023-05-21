@@ -35,7 +35,9 @@ class GamePlayState(State):
         self.__player = Hero(
             Config.get("game_play", "hero", "spawn_position"))
         SoundPlayer.instance().play_music_fade(Config.get("game_play", "music"))
+
         self.__player.set_shoot_action(self.__hero_shoot)
+        self.__player.set_hit_action(self.__hero_hit)
 
     def handle_event(self, event):
         self.__mode.handle_event(event)
@@ -107,5 +109,9 @@ class GamePlayState(State):
         AssetManager.instance().clean(StateTypes.GamePlay)
 
     def __hero_shoot(self, shoot_pos, shoot_dir):
-        print('Boom! --- ', shoot_pos, shoot_dir)
+        SoundPlayer.instance().play_sound("shoot")
+        return True
+
+    def __hero_hit(self, hit_rect):
+        SoundPlayer.instance().play_sound("whip")
         return True

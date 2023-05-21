@@ -16,7 +16,10 @@
     "spawn_position": [480, 200],
     "jump_speed": 0.4,
     "shoot_cd": 150,
-    "shoot_offset": 10
+    "shoot_offset": 10,
+    "hit_cd": 700,
+    "hit_width": 30,
+    "hit_height": 30
   },
   "platform": {
     "spritesheet": "ground",
@@ -32,5 +35,5 @@
       "tiles_width": 21
     }
   },
-  "sfx": ["jump", "shoot"]
+  "sfx": ["jump", "shoot", "whip", "whip_hit"]
 }

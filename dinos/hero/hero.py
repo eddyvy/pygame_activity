@@ -2,9 +2,7 @@ import pygame
 
 from dinos.common.input_key_map import InputKeyMap
 from dinos.config import Config
-from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.hero.hero_body import HeroBody
-from dinos.resources.animations_handler import AnimationsHandler
 from dinos.resources.sound_player import SoundPlayer
 
 
@@ -21,17 +19,32 @@ class Hero(HeroBody):
         self.__max_falling_speed = Config.get(
             "game", "physics", "max_falling_speed")
         self.__shoot_cd = Config.get("game_play", "hero", "shoot_cd")
+        self.__shoot_offset = Config.get("game_play", "hero", "shoot_offset")
+        self.__hit_cd = Config.get("game_play", "hero", "hit_cd")
+        self.__hit_width = Config.get("game_play", "hero", "hit_width")
+        self.__hit_height = Config.get("game_play", "hero", "hit_height")
 
         self._velocity = pygame.math.Vector2(0.0, 0.0)
         self._is_moving_left = False
         self._is_moving_right = False
         self.__is_on_air = True
         self.__is_jumping = False
+        self.__heading_dir = "right"
+
         self._is_shooting = False
         self.__shoot_cooldown = 0
         self.__shoot_callback = None
-        self.__shoot_offset = Config.get("game_play", "hero", "shoot_offset")
-        self.__shoot_dir = "right"
+        self.__shoot_dir = self.__heading_dir
+
+        self._is_hitting = False
+        self.__hit_cooldown = 0
+        self.__hit_callback = None
+        self.__hit_dir = self.__heading_dir
+        self.hit_rect = self.rect.copy()
+        self.hit_rect.w += self.__hit_width
+        self.hit_rect.h += self.__hit_height
+
+        self._center()
 
     def handle_event(self, event):
         if self._inputs.is_released(event, "left"):
@@ -41,30 +54,44 @@ class Hero(HeroBody):
         if self._inputs.is_pressed(event, "left"):
             self._is_moving_left = True
             self._is_moving_right = False
-            self.__shoot_dir = "left"
+            self.__heading_dir = "left"
         if self._inputs.is_pressed(event, "right"):
             self._is_moving_right = True
             self._is_moving_left = False
-            self.__shoot_dir = "right"
+            self.__heading_dir = "right"
         if self._inputs.is_pressed(event, "jump"):
             if not self.__is_on_air:
                 self.__is_jumping = True
         if self._inputs.is_pressed(event, "shoot"):
             self.__shoot()
+        if self._inputs.is_pressed(event, "hit"):
+            self.__hit()
 
     def update(self, delta_time):
+        super().update(delta_time)
+        self.__update_hitting(delta_time)
         self.__update_shooting(delta_time)
         self.__update_movement(delta_time)
-        super().update(delta_time)
 
     def render(self, surface):
         super().render(surface)
+
+    def _render_debug(self, surface):
+        super()._render_debug(surface)
+        pygame.draw.rect(
+            surface, Config.get("game", "debug", "collider_color_2"),
+            self.hit_rect,
+            1
+        )
 
     def is_touching_ground(self):
         self.__is_on_air = self.__is_jumping
 
     def set_shoot_action(self, shoot_callback):
         self.__shoot_callback = shoot_callback
+
+    def set_hit_action(self, hit_callback):
+        self.__hit_callback = hit_callback
 
     def __update_movement(self, delta_time):
         self._velocity.x = 0
@@ -95,15 +122,24 @@ class Hero(HeroBody):
 
         self.position.y += distance.y
 
+    def __check_bounds(self, velocity):
+        new_pos = self.position + velocity
+        return not (
+            new_pos.x < 0
+            or new_pos.x > Config.get("game", "screen_size")[0]
+        )
+
     def __shoot(self):
-        if self.__shoot_cooldown <= 0 and self.__shoot_callback != None:
-            if self.__shoot_callback(
-                (int(self.position.x), int((self.position.y) - self.__shoot_offset)),
-                self.__shoot_dir
-            ):
-                self._is_shooting = True
-                self.__shoot_cooldown = self.__shoot_cd
-                SoundPlayer.instance().play_sound("shoot")
+        if self.__shoot_cooldown > 0 or self.__shoot_callback == None or self._is_hitting:
+            return
+
+        self.__shoot_dir = self.__heading_dir
+        if self.__shoot_callback(
+            (int(self.position.x), int((self.position.y) - self.__shoot_offset)),
+            self.__shoot_dir
+        ):
+            self._is_shooting = True
+            self.__shoot_cooldown = self.__shoot_cd
 
     def __update_shooting(self, delta_time):
         if not self._is_shooting:
@@ -112,9 +148,25 @@ class Hero(HeroBody):
         if self.__shoot_cooldown <= 0:
             self._is_shooting = False
 
-    def __check_bounds(self, velocity):
-        new_pos = self.position + velocity
-        return not (
-            new_pos.x < 0
-            or new_pos.x > Config.get("game", "screen_size")[0]
-        )
+    def __hit(self):
+        if self.__hit_cooldown > 0 or self.__hit_callback == None or self._is_shooting:
+            return
+
+        self.__hit_dir = self.__heading_dir
+        if self.__hit_callback(self.hit_rect):
+            self._is_hitting = True
+            self.__hit_cooldown = self.__hit_cd
+
+    def __update_hitting(self, delta_time):
+        self.hit_rect.center = self.position.xy + self._render_offset
+        if not self._is_hitting:
+            return
+
+        if self.__hit_dir == "right":
+            self.hit_rect.left = self.rect.right
+        elif self.__hit_dir == "left":
+            self.hit_rect.right = self.rect.left
+
+        self.__hit_cooldown -= delta_time
+        if self.__hit_cooldown <= 0:
+            self._is_hitting = False

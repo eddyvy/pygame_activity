@@ -40,3 +40,6 @@ class Animation(Updatable):
 
     def get_current_spritesheet_seq(self):
         return self.__current_sequence
+
+    def get_current_frame(self):
+        return self.__current_frame

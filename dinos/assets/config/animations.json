@@ -18,11 +18,11 @@
         "sequence": [16, 17, 18, 19, 20, 21, 22],
         "duration": 1000
       },
-      "hit_short_right": {
-        "sequence": [24, 25, 26, 27, 28, 29],
-        "duration": 1000
-      },
       "hit_right": {
+        "sequence": [24, 25, 26, 27, 28, 29],
+        "duration": 700
+      },
+      "hit_long_right": {
         "sequence": [32, 33, 34, 35, 36, 37, 38, 39],
         "duration": 1000
       },
@@ -38,8 +38,8 @@
       "walk_left": { "reverse": "walk_right" },
       "jump_left": { "reverse": "jump_right" },
       "roll_left": { "reverse": "roll_right" },
-      "hit_short_left": { "reverse": "hit_short_right" },
       "hit_left": { "reverse": "hit_right" },
+      "hit_long_left": { "reverse": "hit_long_right" },
       "shoot_left": { "reverse": "shoot_right" },
       "die_left": { "reverse": "die_right" }
     }

@@ -27,9 +27,6 @@ class HeroBody(GameObject):
             self.rect.height * infco[1]
         )
         self.prev_rect = self.rect.copy()
-        self._center()
-
-        self.__shooting_cd = 0
 
     def handle_event(self, event):
         pass
@@ -54,10 +51,14 @@ class HeroBody(GameObject):
 
         if self._is_shooting:
             if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
-                self.__animations.animate("shoot_left")
+                self.__animations.animate_once("shoot_left")
             elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
-                self.__animations.animate("shoot_right")
-            self.__shooting_cd -= delta_time
+                self.__animations.animate_once("shoot_right")
+        elif self._is_hitting:
+            if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
+                self.__animations.animate_once("hit_left")
+            elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
+                self.__animations.animate_once("hit_right")
         elif self._velocity.x < 0:
             self.__animations.animate("walk_left")
         elif self._velocity.x > 0:

@@ -46,6 +46,12 @@
     },
     "shoot": {
       "file": ["dinos.assets.sfx", "shoot.wav"]
+    },
+    "whip": {
+      "file": ["dinos.assets.sfx", "whip.wav"]
+    },
+    "whip_hit": {
+      "file": ["dinos.assets.sfx", "whip_hit.wav"]
     }
   }
 }

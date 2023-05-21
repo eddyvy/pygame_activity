@@ -28,16 +28,39 @@ class AnimationsHandler(Updatable):
 
         self.__set_current_animation(initial_animation)
 
+        self.__backup_animation_name = initial_animation
+        self.__running_once = False
+
     def update(self, delta_time):
+        if self.__running_once:
+            prev_frame = self.__current_animation.get_current_frame()
+            self.__current_animation.update(delta_time)
+            new_frame = self.__current_animation.get_current_frame()
+
+            if new_frame < prev_frame:
+                self.__running_once = False
+                self.__set_current_animation(self.__backup_animation_name)
+            else:
+                return
+
         self.__current_animation.update(delta_time)
 
     def quit(self):
         pass
 
     def animate(self, name):
-        if self.__current_animation_name == name:
+        self.__backup_animation_name = name
+        if self.__current_animation_name == name or self.__running_once:
             return
 
+        self.__set_current_animation(name)
+        self.__current_animation.restart()
+
+    def animate_once(self, name):
+        if self.__current_animation_name == name or self.__running_once:
+            return
+
+        self.__running_once = True
         self.__set_current_animation(name)
         self.__current_animation.restart()
 
