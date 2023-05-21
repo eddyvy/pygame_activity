@@ -40,6 +40,9 @@
     },
     "select": {
       "file": ["dinos.assets.sfx", "select_sound.wav"]
+    },
+    "jump": {
+      "file": ["dinos.assets.sfx", "jump.wav"]
     }
   }
 }

@@ -75,7 +75,7 @@ class GamePlayState(State):
 
     def quit(self):
         SoundPlayer.instance().stop_music()
-        self.__player.kill()
+        self.__player.quit()
         self.__platforms.empty()
         self.__mode.quit()
         self.__fps_stats.quit()
@@ -90,6 +90,9 @@ class GamePlayState(State):
             self.__STATE,
             Config.get("game_play", "music")
         )
+        for sfx in Config.get("game_play", "sfx"):
+            AssetManager.instance().sfx.load(self.__STATE, sfx)
+
         AssetManager.instance().spritesheet.load(
             self.__STATE,
             Config.get("game_play", "hero", "spritesheet")

@@ -29,5 +29,6 @@
       "position": [480, 530],
       "tiles_width": 21
     }
-  }
+  },
+  "sfx": ["jump"]
 }
