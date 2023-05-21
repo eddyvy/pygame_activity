@@ -25,6 +25,13 @@ class GamePlayState(State):
     def enter(self):
         self.done = False
         self.__load_assets()
+        self.__background = AssetManager.instance().image.get(
+            Config.get("game_play", "background", "image"))
+        self.__background = pygame.transform.scale(
+            self.__background,
+            (Config.get("game", "screen_size")[
+             0], Config.get("game", "screen_size")[1])
+        )
         self.__mode = GamePlayMode.instance()
         self.__fps_stats = FPSStats()
 
@@ -67,6 +74,8 @@ class GamePlayState(State):
                 self.__player.is_touching_ground()
 
     def render(self, surface):
+        surface.blit(self.__background, (0, 0))
+
         if self.__mode.debug:
             self.__fps_stats.render(surface)
 
@@ -88,6 +97,10 @@ class GamePlayState(State):
         AssetManager.instance().font.load(
             self.__STATE,
             Config.get("game_play", "fps_stats", "fps_font")
+        )
+        AssetManager.instance().image.load(
+            self.__STATE,
+            Config.get("game_play", "background", "image")
         )
         AssetManager.instance().music.load(
             self.__STATE,

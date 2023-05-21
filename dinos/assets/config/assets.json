@@ -5,7 +5,11 @@
       "font_size": 20
     }
   },
-  "image": {},
+  "image": {
+    "background": {
+      "file": ["dinos.assets.images", "background.png"]
+    }
+  },
   "spritesheet": {
     "hero": {
       "file": ["dinos.assets.images", "hero_spritesheet.png"],

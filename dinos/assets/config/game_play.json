@@ -1,11 +1,15 @@
 {
   "music": "game_play",
+  "sfx": ["jump", "shoot", "whip", "whip_hit"],
   "fps_stats": {
     "fps": 60,
     "time_per_frame": 16,
     "refresh_update_time": 1000,
     "fps_pos": [70, 20],
     "fps_font": "main"
+  },
+  "background": {
+    "image": "background"
   },
   "hero": {
     "spritesheet": "hero",
@@ -34,6 +38,5 @@
       "position": [480, 530],
       "tiles_width": 21
     }
-  },
-  "sfx": ["jump", "shoot", "whip", "whip_hit"]
+  }
 }
