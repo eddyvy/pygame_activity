@@ -11,16 +11,21 @@
     "spritesheet": "hero",
     "animations": "hero",
     "inflate_collider": [-0.85, -0.33],
+    "render_offset": [0, 13],
     "speed": 0.4,
-    "spawn_position": [480, 450],
-    "render_offset": [0, 13]
+    "spawn_position": [480, 200],
+    "jump_speed": 0.4
+  },
+  "platform": {
+    "spritesheet": "ground",
+    "border_left": 0,
+    "central": 1,
+    "border_right": 2,
+    "inflate_collider": [1, -0.95],
+    "render_offset": [0, -15]
   },
   "environment": {
     "ground": {
-      "spritesheet": "ground",
-      "border_left": 0,
-      "central": 1,
-      "border_right": 2,
       "position": [480, 530],
       "tiles_width": 21
     }

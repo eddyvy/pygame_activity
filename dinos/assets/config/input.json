@@ -10,6 +10,9 @@
   },
   "hero": {
     "left": ["a", "left"],
-    "right": ["d", "right"]
+    "right": ["d", "right"],
+    "jump": ["space"],
+    "shoot": ["b"],
+    "hit": ["n"]
   }
 }

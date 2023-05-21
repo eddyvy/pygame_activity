@@ -1,4 +1,6 @@
 from sre_parse import State
+
+import pygame
 from dinos.common.render_group import RenderGroup
 from dinos.config import Config
 from dinos.environment.platform import Platform
@@ -19,7 +21,6 @@ class GamePlayState(State):
         self.next_state = StateTypes.Intro
 
         self.__platforms = RenderGroup()
-        self.__entities = RenderGroup()
 
     def enter(self):
         self.done = False
@@ -31,7 +32,8 @@ class GamePlayState(State):
             Config.get("game_play", "environment", "ground", "position"),
             Config.get("game_play", "environment", "ground", "tiles_width")
         ))
-        self.__entities.add(Hero())
+        self.__player = Hero(
+            Config.get("game_play", "hero", "spawn_position"))
         SoundPlayer.instance().play_music_fade(Config.get("game_play", "music"))
 
     def handle_event(self, event):
@@ -40,7 +42,7 @@ class GamePlayState(State):
         if self.__mode.pause:
             return
 
-        self.__entities.handle_event(event)
+        self.__player.handle_event(event)
 
     def update(self, delta_time):
         SoundPlayer.instance().update(delta_time)
@@ -50,7 +52,16 @@ class GamePlayState(State):
         if self.__mode.pause:
             return
 
-        self.__entities.update(delta_time)
+        self.__player.update(delta_time)
+
+        for platform in pygame.sprite.spritecollide(self.__player, self.__platforms, False):
+            prev_feet = self.__player.prev_rect.bottom
+            feet = self.__player.rect.bottom
+            if (
+                (feet >= platform.rect.top and feet <= platform.rect.bottom)
+                or (feet >= platform.rect.bottom and prev_feet <= platform.rect.top)
+            ):
+                self.__player.is_touching_ground()
 
     def render(self, surface):
         if self.__mode.debug:
@@ -60,11 +71,12 @@ class GamePlayState(State):
             pass
 
         self.__platforms.render(surface)
-        self.__entities.render(surface)
+        self.__player.render(surface)
 
     def quit(self):
         SoundPlayer.instance().stop_music()
-        self.__entities.empty()
+        self.__player.kill()
+        self.__platforms.empty()
         self.__mode.quit()
         self.__fps_stats.quit()
         self.__unload_assets()
@@ -84,7 +96,7 @@ class GamePlayState(State):
         )
         AssetManager.instance().spritesheet.load(
             self.__STATE,
-            Config.get("game_play", "environment", "ground", "spritesheet")
+            Config.get("game_play", "platform", "spritesheet")
         )
 
     def __unload_assets(self):
