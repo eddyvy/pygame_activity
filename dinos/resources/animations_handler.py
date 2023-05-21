@@ -14,19 +14,19 @@ class AnimationsHandler(Updatable):
         ).spritesheet.get(self.__spritesheet_name)
 
         self.__animations = {}
+        self.__reverse = {}
         for animation_name in list(self.__animations_data.keys()):
             data = self.__animations_data[animation_name]
 
-            # TODO handle inverted animations
             if "reverse" in data:
+                self.__reverse[animation_name] = data["reverse"]
                 continue
 
             self.__animations[animation_name] = Animation(
                 data["sequence"], data["duration"]
             )
 
-        self.__current_animation_name = initial_animation
-        self.__current_animation = self.__animations[initial_animation]
+        self.__set_current_animation(initial_animation)
 
     def update(self, delta_time):
         self.__current_animation.update(delta_time)
@@ -37,12 +37,24 @@ class AnimationsHandler(Updatable):
     def animate(self, name):
         if self.__current_animation_name == name:
             return
-        self.__current_animation_name = name
-        self.__current_animation = self.__animations[name]
+
+        self.__set_current_animation(name)
         self.__current_animation.restart()
 
     def get_current_animation_name(self):
         return self.__current_animation_name
 
     def get_current_image(self):
-        return self.__spritesheet.get_image(self.__current_animation.get_current_spritesheet_seq())
+        return self.__spritesheet.get_image(
+            self.__current_animation.get_current_spritesheet_seq(),
+            self.__current_reversed
+        )
+
+    def __set_current_animation(self, name):
+        self.__current_animation_name = name
+        if name in self.__reverse:
+            self.__current_animation = self.__animations[self.__reverse[name]]
+            self.__current_reversed = True
+        else:
+            self.__current_animation = self.__animations[name]
+            self.__current_reversed = False

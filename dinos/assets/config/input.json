@@ -7,5 +7,9 @@
     "up": ["w", "up"],
     "down": ["s", "down"],
     "accept": ["space", "return"]
+  },
+  "hero": {
+    "left": ["a", "left"],
+    "right": ["d", "right"]
   }
 }

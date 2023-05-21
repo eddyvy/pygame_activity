@@ -10,7 +10,8 @@
   "hero": {
     "spritesheet": "hero",
     "animations": "hero",
-    "inflate_collider": [-0.7, -0.1]
+    "inflate_collider": [-0.7, -0.1],
+    "speed": 0.4
   },
   "environment": {
     "ground": {
