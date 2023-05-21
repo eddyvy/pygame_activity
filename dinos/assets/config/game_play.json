@@ -14,7 +14,9 @@
     "render_offset": [0, 13],
     "speed": 0.4,
     "spawn_position": [480, 200],
-    "jump_speed": 0.4
+    "jump_speed": 0.4,
+    "shoot_cd": 150,
+    "shoot_offset": 10
   },
   "platform": {
     "spritesheet": "ground",
@@ -30,5 +32,5 @@
       "tiles_width": 21
     }
   },
-  "sfx": ["jump"]
+  "sfx": ["jump", "shoot"]
 }

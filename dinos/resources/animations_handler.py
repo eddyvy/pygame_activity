@@ -41,6 +41,9 @@ class AnimationsHandler(Updatable):
         self.__set_current_animation(name)
         self.__current_animation.restart()
 
+    def get_current_animation(self):
+        return self.__current_animation
+
     def get_current_animation_name(self):
         return self.__current_animation_name
 

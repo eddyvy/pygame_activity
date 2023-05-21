@@ -17,11 +17,21 @@ class Hero(HeroBody):
 
         self._speed = Config.get("game_play", "hero", "speed")
         self._jump_speed = Config.get("game_play", "hero", "jump_speed")
+        self.__gravity = Config.get("game", "physics", "gravity")
+        self.__max_falling_speed = Config.get(
+            "game", "physics", "max_falling_speed")
+        self.__shoot_cd = Config.get("game_play", "hero", "shoot_cd")
+
         self._velocity = pygame.math.Vector2(0.0, 0.0)
         self._is_moving_left = False
         self._is_moving_right = False
-        self._is_falling = True
-        self._is_jumping = False
+        self.__is_on_air = True
+        self.__is_jumping = False
+        self._is_shooting = False
+        self.__shoot_cooldown = 0
+        self.__shoot_callback = None
+        self.__shoot_offset = Config.get("game_play", "hero", "shoot_offset")
+        self.__shoot_dir = "right"
 
     def handle_event(self, event):
         if self._inputs.is_released(event, "left"):
@@ -31,14 +41,19 @@ class Hero(HeroBody):
         if self._inputs.is_pressed(event, "left"):
             self._is_moving_left = True
             self._is_moving_right = False
+            self.__shoot_dir = "left"
         if self._inputs.is_pressed(event, "right"):
             self._is_moving_right = True
             self._is_moving_left = False
+            self.__shoot_dir = "right"
         if self._inputs.is_pressed(event, "jump"):
-            if not self._is_falling:
-                self._is_jumping = True
+            if not self.__is_on_air:
+                self.__is_jumping = True
+        if self._inputs.is_pressed(event, "shoot"):
+            self.__shoot()
 
     def update(self, delta_time):
+        self.__update_shooting(delta_time)
         self.__update_movement(delta_time)
         super().update(delta_time)
 
@@ -46,7 +61,10 @@ class Hero(HeroBody):
         super().render(surface)
 
     def is_touching_ground(self):
-        self._is_falling = self._is_jumping
+        self.__is_on_air = self.__is_jumping
+
+    def set_shoot_action(self, shoot_callback):
+        self.__shoot_callback = shoot_callback
 
     def __update_movement(self, delta_time):
         self._velocity.x = 0
@@ -56,17 +74,16 @@ class Hero(HeroBody):
         if self._is_moving_right:
             self._velocity.x += self._speed
 
-        if self._is_falling:
-            self._velocity.y += Config.get("game", "physics", "gravity")
-            if self._velocity.y > Config.get("game", "physics", "max_falling_speed"):
-                self._velocity.y = Config.get(
-                    "game", "physics", "max_falling_speed")
-            if self._is_jumping and self._velocity.y <= 0:
-                self._is_jumping = False
+        if self.__is_on_air:
+            self._velocity.y += self.__gravity
+            if self._velocity.y > self.__max_falling_speed:
+                self._velocity.y = self.__max_falling_speed
+            if self.__is_jumping and self._velocity.y <= 0:
+                self.__is_jumping = False
         else:
-            if self._is_jumping:
+            if self.__is_jumping:
                 self._velocity.y = -self._jump_speed
-                self._is_falling = True
+                self.__is_on_air = True
                 SoundPlayer.instance().play_sound("jump")
             else:
                 self._velocity.y = 0
@@ -77,6 +94,23 @@ class Hero(HeroBody):
             self.position.x += distance.x
 
         self.position.y += distance.y
+
+    def __shoot(self):
+        if self.__shoot_cooldown <= 0 and self.__shoot_callback != None:
+            if self.__shoot_callback(
+                (int(self.position.x), int((self.position.y) - self.__shoot_offset)),
+                self.__shoot_dir
+            ):
+                self._is_shooting = True
+                self.__shoot_cooldown = self.__shoot_cd
+                SoundPlayer.instance().play_sound("shoot")
+
+    def __update_shooting(self, delta_time):
+        if not self._is_shooting:
+            return
+        self.__shoot_cooldown -= delta_time
+        if self.__shoot_cooldown <= 0:
+            self._is_shooting = False
 
     def __check_bounds(self, velocity):
         new_pos = self.position + velocity

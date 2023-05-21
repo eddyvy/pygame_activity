@@ -29,6 +29,8 @@ class HeroBody(GameObject):
         self.prev_rect = self.rect.copy()
         self._center()
 
+        self.__shooting_cd = 0
+
     def handle_event(self, event):
         pass
 
@@ -47,14 +49,23 @@ class HeroBody(GameObject):
         self.kill()
 
     def __update_animations(self, delta_time):
-        if self._velocity.x < 0:
+        current_is_left = "left" in self.__animations.get_current_animation_name()
+        current_is_right = "right" in self.__animations.get_current_animation_name()
+
+        if self._is_shooting:
+            if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
+                self.__animations.animate("shoot_left")
+            elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
+                self.__animations.animate("shoot_right")
+            self.__shooting_cd -= delta_time
+        elif self._velocity.x < 0:
             self.__animations.animate("walk_left")
         elif self._velocity.x > 0:
             self.__animations.animate("walk_right")
         elif self._velocity.x == 0:
-            if self.__animations.get_current_animation_name() == "walk_left":
+            if current_is_left:
                 self.__animations.animate("idle_left")
-            elif self.__animations.get_current_animation_name() == "walk_right":
+            elif current_is_right:
                 self.__animations.animate("idle_right")
 
         self.__animations.update(delta_time)

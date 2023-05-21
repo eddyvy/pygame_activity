@@ -43,6 +43,9 @@
     },
     "jump": {
       "file": ["dinos.assets.sfx", "jump.wav"]
+    },
+    "shoot": {
+      "file": ["dinos.assets.sfx", "shoot.wav"]
     }
   }
 }

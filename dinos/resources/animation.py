@@ -21,12 +21,17 @@ class Animation(Updatable):
         if self.__duration == None:
             return
 
-        if self.__last_frame_time > self.__time_per_frame:
-            self.__current_frame = self.__current_frame + 1
+        updated = False
+        while self.__last_frame_time > self.__time_per_frame:
+            updated = True
+            self.__last_frame_time -= self.__time_per_frame
+            self.__current_frame += 1
             if self.__current_frame >= self.__total_sequence:
                 self.__current_frame = 0
-            self.__last_frame_time = 0
+
+        if updated:
             self.__current_sequence = self.__sequence[self.__current_frame]
+            self.__last_frame_time = 0
         else:
             self.__last_frame_time += delta_time
 
