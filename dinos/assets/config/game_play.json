@@ -10,8 +10,10 @@
   "hero": {
     "spritesheet": "hero",
     "animations": "hero",
-    "inflate_collider": [-0.7, -0.1],
-    "speed": 0.4
+    "inflate_collider": [-0.85, -0.33],
+    "speed": 0.4,
+    "spawn_position": [480, 450],
+    "render_offset": [0, 13]
   },
   "environment": {
     "ground": {

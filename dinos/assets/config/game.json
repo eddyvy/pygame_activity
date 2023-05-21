@@ -4,5 +4,9 @@
   "foreground_color": [255, 255, 255],
   "title": "Dinos Games",
   "language": "en",
-  "time_per_frame": 16
+  "time_per_frame": 16,
+  "debug": {
+    "collider_color": [255, 0, 0],
+    "render_color": [0, 255, 0]
+  }
 }

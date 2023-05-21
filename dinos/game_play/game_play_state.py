@@ -24,13 +24,13 @@ class GamePlayState(State):
     def enter(self):
         self.done = False
         self.__load_assets()
-        self.__mode = GamePlayMode()
+        self.__mode = GamePlayMode.instance()
         self.__fps_stats = FPSStats()
 
-        self.__ground = Platform(
+        self.__platforms.add(Platform(
             Config.get("game_play", "environment", "ground", "position"),
             Config.get("game_play", "environment", "ground", "tiles_width")
-        )
+        ))
         self.__entities.add(Hero())
         SoundPlayer.instance().play_music_fade(Config.get("game_play", "music"))
 
@@ -59,7 +59,7 @@ class GamePlayState(State):
         if self.__mode.pause:
             pass
 
-        self.__ground.render(surface)
+        self.__platforms.render(surface)
         self.__entities.render(surface)
 
     def quit(self):
