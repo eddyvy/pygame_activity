@@ -1,9 +1,11 @@
+import random
 from sre_parse import State
 
 import pygame
 from dinos.common.render_group import RenderGroup
 from dinos.config import Config
 from dinos.dinosaurs.dino import Dino
+from dinos.dinosaurs.pool import Pool
 from dinos.environment.platform import Platform
 
 from dinos.game_play.game_play_mode import GamePlayMode
@@ -21,6 +23,7 @@ class GamePlayState(State):
         super().__init__()
         self.next_state = StateTypes.Intro
 
+        self.__last_sy = 0
         self.__platforms = RenderGroup()
         self.__enemies = RenderGroup()
 
@@ -48,7 +51,11 @@ class GamePlayState(State):
         self.__player.set_shoot_action(self.__hero_shoot)
         self.__player.set_hit_action(self.__hero_hit)
 
-        self.__enemies.add(Dino(self.__hero_pos))
+        self.__pool = Pool(
+            Config.get("game_play", "dinos", "pool_size"),
+            Dino,
+            self.__hero_pos
+        )
 
     def handle_event(self, event):
         self.__mode.handle_event(event)
@@ -66,6 +73,10 @@ class GamePlayState(State):
             return
 
         SoundPlayer.instance().update(delta_time)
+
+        if random.random() <= Config.get("game_play", "dinos", "spawn_prob"):
+            self.__spawn_enemy()
+
         self.__player.update(delta_time)
 
         for platform in pygame.sprite.spritecollide(self.__player, self.__platforms, False):
@@ -86,6 +97,8 @@ class GamePlayState(State):
 
         if self.__mode.debug:
             self.__fps_stats.render(surface)
+            pygame.draw.line(surface, Config.get("game", "debug", "collider_color_2"),
+                             (0, self.__last_sy), (Config.get("game", "screen_size")[0], self.__last_sy))
 
         if self.__mode.pause:
             pass
@@ -146,6 +159,30 @@ class GamePlayState(State):
 
     def __hero_shoot(self, shoot_pos, shoot_dir):
         SoundPlayer.instance().play_sound("shoot")
+
+        sh_x = shoot_pos[0]
+        sh_y = shoot_pos[1]
+        is_left = shoot_dir == "left"
+
+        closer_enemy = None
+        closer_enemy_dist = None
+
+        self.__last_sy = sh_y
+
+        for enemy in self.__enemies.sprites():
+            on_height = sh_y >= enemy.rect.top and sh_y <= enemy.rect.bottom
+            if on_height:
+                enemy_dist = sh_x - enemy.position.x
+                if (
+                    (is_left and enemy_dist > 0) and (closer_enemy_dist == None or abs(closer_enemy_dist) > abs(enemy_dist)) or
+                    ((not is_left and enemy_dist < 0) and (closer_enemy_dist ==
+                     None or abs(closer_enemy_dist) > abs(enemy_dist)))
+                ):
+                    closer_enemy = enemy
+
+        if closer_enemy != None:
+            self.__kill_enemy(closer_enemy)
+
         return True
 
     def __hero_hit(self, hit_rect):
@@ -154,3 +191,12 @@ class GamePlayState(State):
 
     def __hero_pos(self):
         return self.__player.position
+
+    def __spawn_enemy(self):
+        enemy = self.__pool.acquire()
+        if enemy != None:
+            self.__enemies.add(enemy)
+
+    def __kill_enemy(self, enemy):
+        self.__enemies.remove(enemy)
+        self.__pool.release(enemy)

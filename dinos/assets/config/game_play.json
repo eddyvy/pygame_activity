@@ -28,7 +28,7 @@
     "spawn_position": [480, 200],
     "jump_speed": 0.4,
     "shoot_cd": 150,
-    "shoot_offset": 10,
+    "shoot_offset": -4,
     "hit_cd": 700,
     "hit_width": 40,
     "hit_height": 30
@@ -52,8 +52,14 @@
     "animations": ["dino_green", "dino_blue", "dino_red", "dino_yellow"],
     "inflate_collider": [-0.4, -0.3],
     "render_offset": [-0.4, 3],
-    "max_speed": 0.25,
-    "jump_speed": 0.3,
-    "acceleration": 0.0001
+    "max_speed": 0.2,
+    "jump_speed": 0.4,
+    "acceleration": 0.00005,
+    "distance_to_jump": 40,
+    "spawn_pos_left": [-45, 450],
+    "spawn_pos_right": [1005, 450],
+    "pool_size": 100,
+    "spawn_prob": 0.01,
+    "jump_prob": 0.005
   }
 }
