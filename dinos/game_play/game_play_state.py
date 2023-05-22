@@ -3,6 +3,7 @@ from sre_parse import State
 import pygame
 from dinos.common.render_group import RenderGroup
 from dinos.config import Config
+from dinos.dinosaurs.dino import Dino
 from dinos.environment.platform import Platform
 
 from dinos.game_play.game_play_mode import GamePlayMode
@@ -21,6 +22,7 @@ class GamePlayState(State):
         self.next_state = StateTypes.Intro
 
         self.__platforms = RenderGroup()
+        self.__enemies = RenderGroup()
 
     def enter(self):
         self.done = False
@@ -46,6 +48,8 @@ class GamePlayState(State):
         self.__player.set_shoot_action(self.__hero_shoot)
         self.__player.set_hit_action(self.__hero_hit)
 
+        self.__enemies.add(Dino())
+
     def handle_event(self, event):
         self.__mode.handle_event(event)
 
@@ -55,23 +59,27 @@ class GamePlayState(State):
         self.__player.handle_event(event)
 
     def update(self, delta_time):
-        SoundPlayer.instance().update(delta_time)
         if self.__mode.debug:
             self.__fps_stats.update(delta_time)
 
         if self.__mode.pause:
             return
 
+        SoundPlayer.instance().update(delta_time)
         self.__player.update(delta_time)
 
         for platform in pygame.sprite.spritecollide(self.__player, self.__platforms, False):
-            prev_feet = self.__player.prev_rect.bottom
-            feet = self.__player.rect.bottom
-            if (
-                (feet >= platform.rect.top and feet <= platform.rect.bottom)
-                or (feet >= platform.rect.bottom and prev_feet <= platform.rect.top)
-            ):
-                self.__player.is_touching_ground()
+            self.__check_ground(self.__player, platform)
+
+        self.__enemies.update(delta_time)
+
+        for enemy, platforms in pygame.sprite.groupcollide(self.__enemies, self.__platforms, False, False).items():
+            for platform in platforms:
+                self.__check_ground(enemy, platform)
+
+        for enemy in pygame.sprite.spritecollide(self.__player, self.__enemies, False):
+            # TODO kill player
+            pass
 
     def render(self, surface):
         surface.blit(self.__background, (0, 0))
@@ -84,10 +92,12 @@ class GamePlayState(State):
 
         self.__platforms.render(surface)
         self.__player.render(surface)
+        self.__enemies.render(surface)
 
     def quit(self):
         SoundPlayer.instance().stop_music()
         self.__player.quit()
+        self.__enemies.empty()
         self.__platforms.empty()
         self.__mode.quit()
         self.__fps_stats.quit()
@@ -117,9 +127,22 @@ class GamePlayState(State):
             self.__STATE,
             Config.get("game_play", "platform", "spritesheet")
         )
+        AssetManager.instance().spritesheet.load(
+            self.__STATE,
+            Config.get("game_play", "dinos", "spritesheet")
+        )
 
     def __unload_assets(self):
         AssetManager.instance().clean(StateTypes.GamePlay)
+
+    def __check_ground(self, entity, platform):
+        prev_feet = entity.prev_rect.bottom
+        feet = entity.rect.bottom
+        if (
+            (feet >= platform.rect.top and feet <= platform.rect.bottom)
+            or (feet >= platform.rect.bottom and prev_feet <= platform.rect.top)
+        ):
+            entity.is_touching_ground()
 
     def __hero_shoot(self, shoot_pos, shoot_dir):
         SoundPlayer.instance().play_sound("shoot")

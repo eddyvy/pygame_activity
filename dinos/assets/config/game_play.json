@@ -1,6 +1,14 @@
 {
   "music": "game_play",
-  "sfx": ["jump", "shoot", "whip", "whip_hit"],
+  "sfx": [
+    "jump",
+    "shoot",
+    "whip",
+    "whip_hit",
+    "jump_enemy",
+    "dead",
+    "dead_enemy"
+  ],
   "fps_stats": {
     "fps": 60,
     "time_per_frame": 16,
@@ -38,5 +46,13 @@
       "position": [480, 530],
       "tiles_width": 21
     }
+  },
+  "dinos": {
+    "spritesheet": "dinos",
+    "animations": ["dino_green", "dino_blue", "dino_red", "dino_yellow"],
+    "inflate_collider": [0, -0.1],
+    "render_offset": [-0.4, -3],
+    "speed": 0.25,
+    "jump_speed": 0.3
   }
 }

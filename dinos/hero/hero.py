@@ -68,13 +68,10 @@ class Hero(HeroBody):
             self.__hit()
 
     def update(self, delta_time):
-        super().update(delta_time)
+        self.__update_movement(delta_time)
         self.__update_hitting(delta_time)
         self.__update_shooting(delta_time)
-        self.__update_movement(delta_time)
-
-    def render(self, surface):
-        super().render(surface)
+        super().update(delta_time)
 
     def _render_debug(self, surface):
         super()._render_debug(surface)

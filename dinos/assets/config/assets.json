@@ -23,6 +23,12 @@
       "cols": 3,
       "scale": 1.5,
       "b_color": [255, 255, 255]
+    },
+    "dinos": {
+      "file": ["dinos.assets.images", "dinos.png"],
+      "rows": 4,
+      "cols": 24,
+      "scale": 2.5
     }
   },
   "music": {
@@ -56,6 +62,15 @@
     },
     "whip_hit": {
       "file": ["dinos.assets.sfx", "whip_hit.wav"]
+    },
+    "jump_enemy": {
+      "file": ["dinos.assets.sfx", "jump_enemy.wav"]
+    },
+    "dead": {
+      "file": ["dinos.assets.sfx", "dead.wav"]
+    },
+    "dead_enemy": {
+      "file": ["dinos.assets.sfx", "dead_enemy.wav"]
     }
   }
 }
