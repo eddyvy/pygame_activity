@@ -48,7 +48,7 @@
     "spritesheet": "dinos",
     "animations": {
       "jump_right": {
-        "sequence": [0, 1, 2, 3],
+        "sequence": [0, 1],
         "duration": 300
       },
       "walk_right": {
@@ -88,7 +88,7 @@
     "spritesheet": "dinos",
     "animations": {
       "jump_right": {
-        "sequence": [48, 49, 50, 51],
+        "sequence": [48, 49],
         "duration": 300
       },
       "walk_right": {
@@ -108,7 +108,7 @@
     "spritesheet": "dinos",
     "animations": {
       "jump_right": {
-        "sequence": [72, 73, 74, 75],
+        "sequence": [72, 73],
         "duration": 300
       },
       "walk_right": {

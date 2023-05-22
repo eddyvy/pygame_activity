@@ -48,7 +48,7 @@ class GamePlayState(State):
         self.__player.set_shoot_action(self.__hero_shoot)
         self.__player.set_hit_action(self.__hero_hit)
 
-        self.__enemies.add(Dino())
+        self.__enemies.add(Dino(self.__hero_pos))
 
     def handle_event(self, event):
         self.__mode.handle_event(event)
@@ -151,3 +151,6 @@ class GamePlayState(State):
     def __hero_hit(self, hit_rect):
         SoundPlayer.instance().play_sound("whip")
         return True
+
+    def __hero_pos(self):
+        return self.__player.position

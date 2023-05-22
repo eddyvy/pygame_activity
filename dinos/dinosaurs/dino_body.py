@@ -1,3 +1,4 @@
+import random
 import pygame
 from dinos.common.game_object import GameObject
 from dinos.config import Config
@@ -9,8 +10,9 @@ class DinoBody(GameObject):
 
     def __init__(self, position):
         super().__init__()
+        type = random.randint(0, 3)
         self.__animations = AnimationsHandler(
-            Config.get("game_play", "dinos", "animations")[0],
+            Config.get("game_play", "dinos", "animations")[type],
             "walk_right"
         )
         _, clip = self.__animations.get_current_image()
@@ -50,7 +52,12 @@ class DinoBody(GameObject):
         current_is_left = "left" in self.__animations.get_current_animation_name()
         current_is_right = "right" in self.__animations.get_current_animation_name()
 
-        if self._velocity.x < 0:
+        if self._is_jumping:
+            if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
+                self.__animations.animate_once("jump_left")
+            elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
+                self.__animations.animate_once("jump_right")
+        elif self._velocity.x < 0:
             self.__animations.animate("walk_left")
         elif self._velocity.x > 0:
             self.__animations.animate("walk_right")

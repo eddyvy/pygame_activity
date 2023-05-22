@@ -60,8 +60,7 @@ class Hero(HeroBody):
             self._is_moving_left = False
             self.__heading_dir = "right"
         if self._inputs.is_pressed(event, "jump"):
-            if not self.__is_on_air:
-                self.__is_jumping = True
+            self.__jump()
         if self._inputs.is_pressed(event, "shoot"):
             self.__shoot()
         if self._inputs.is_pressed(event, "hit"):
@@ -90,6 +89,11 @@ class Hero(HeroBody):
     def set_hit_action(self, hit_callback):
         self.__hit_callback = hit_callback
 
+    def __jump(self):
+        if not self.__is_on_air:
+            self.__is_jumping = True
+            SoundPlayer.instance().play_sound("jump")
+
     def __update_movement(self, delta_time):
         self._velocity.x = 0
 
@@ -108,7 +112,6 @@ class Hero(HeroBody):
             if self.__is_jumping:
                 self._velocity.y = -self._jump_speed
                 self.__is_on_air = True
-                SoundPlayer.instance().play_sound("jump")
             else:
                 self._velocity.y = 0
 

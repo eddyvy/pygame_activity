@@ -30,7 +30,7 @@
     "shoot_cd": 150,
     "shoot_offset": 10,
     "hit_cd": 700,
-    "hit_width": 30,
+    "hit_width": 40,
     "hit_height": 30
   },
   "platform": {
@@ -50,9 +50,10 @@
   "dinos": {
     "spritesheet": "dinos",
     "animations": ["dino_green", "dino_blue", "dino_red", "dino_yellow"],
-    "inflate_collider": [0, -0.1],
-    "render_offset": [-0.4, -3],
-    "speed": 0.25,
-    "jump_speed": 0.3
+    "inflate_collider": [-0.4, -0.3],
+    "render_offset": [-0.4, 3],
+    "max_speed": 0.25,
+    "jump_speed": 0.3,
+    "acceleration": 0.0001
   }
 }
