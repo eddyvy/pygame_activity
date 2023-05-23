@@ -16,9 +16,6 @@
     "fps_pos": [70, 20],
     "fps_font": "main"
   },
-  "background": {
-    "image": "background"
-  },
   "hero": {
     "spritesheet": "hero",
     "animations": "hero",
@@ -42,6 +39,9 @@
     "render_offset": [0, -15]
   },
   "environment": {
+    "background": {
+      "image": "background"
+    },
     "ground": {
       "position": [480, 530],
       "tiles_width": 21

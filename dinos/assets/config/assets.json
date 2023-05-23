@@ -7,7 +7,8 @@
   },
   "image": {
     "background": {
-      "file": ["dinos.assets.images", "background.png"]
+      "file": ["dinos.assets.images", "background.png"],
+      "size": [960, 540]
     }
   },
   "spritesheet": {
