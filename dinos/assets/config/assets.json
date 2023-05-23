@@ -1,14 +1,26 @@
 {
   "fonts": {
-    "main": {
+    "secondary": {
       "file": ["dinos.assets.fonts", "Sansation.ttf"],
       "font_size": 20
+    },
+    "title": {
+      "file": ["dinos.assets.fonts", "28_Days_Later.ttf"],
+      "font_size": 60
+    },
+    "main": {
+      "file": ["dinos.assets.fonts", "BlackRoseItalic.ttf"],
+      "font_size": 40
     }
   },
   "image": {
     "background": {
       "file": ["dinos.assets.images", "background.png"],
       "size": [960, 540]
+    },
+    "bullet": {
+      "file": ["dinos.assets.images", "bullet.png"],
+      "size": [30, 30]
     }
   },
   "spritesheet": {

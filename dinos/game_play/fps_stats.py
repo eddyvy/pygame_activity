@@ -18,8 +18,7 @@ class FPSStats(Updatable, Renderable):
             font,
             "0 - 0",
             Config.get("game_play", "fps_stats", "fps_pos"),
-            Config.get("game", "foreground_color"),
-            Config.get("game", "background_color")
+            Config.get("game_play", "fps_stats", "fps_color")
         )
 
         self.__refresh_update_time = Config.get(

@@ -3,7 +3,7 @@ from dinos.common.game_abstract import Renderable
 
 class UILabel(Renderable):
 
-    def __init__(self, font, text, position, color, bg_color):
+    def __init__(self, font, text, position, color, bg_color=None):
         self.__font = font
         self.__text = text
         self.__color = color

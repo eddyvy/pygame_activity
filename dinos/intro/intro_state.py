@@ -42,6 +42,10 @@ class IntroState(State):
             self.__STATE,
             Config.get("intro", "font")
         )
+        AssetManager.instance().font.load(
+            self.__STATE,
+            Config.get("intro", "font_title")
+        )
         AssetManager.instance().music.load(self.__STATE, Config.get("intro", "music"))
         AssetManager.instance().sfx.load(self.__STATE, Config.get("intro", "sfx_select"))
 

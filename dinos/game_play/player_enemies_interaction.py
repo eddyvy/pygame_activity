@@ -51,7 +51,7 @@ class PlayerEnemiesInteraction:
 
         if closer_enemy != None:
             closer_enemy.die(self.__kill_enemy)
-            kills += 1
+            self.kills += 1
 
         return True
 

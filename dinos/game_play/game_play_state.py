@@ -8,6 +8,7 @@ from dinos.dinosaurs.pool import Pool
 from dinos.game_play.fps_stats import FPSStats
 from dinos.game_play.game_play_assets_loader import GamePlayAssetsLoader
 from dinos.game_play.game_play_environment import GamePlayEnvironment
+from dinos.game_play.game_play_hud import GamePlayHUD
 from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.game_play.player_enemies_interaction import PlayerEnemiesInteraction
 from dinos.hero.hero import Hero
@@ -49,6 +50,8 @@ class GamePlayState(State):
         self.__interaction = PlayerEnemiesInteraction(
             self.__player, self.__enemies, self.__kill_enemy)
 
+        self.__hud = GamePlayHUD(self.__get_kills, self.__get_bullets)
+
     def handle_event(self, event):
         self.__mode.handle_event(event)
 
@@ -79,6 +82,8 @@ class GamePlayState(State):
             # TODO kill player
             pass
 
+        self.__hud.update(delta_time)
+
     def render(self, surface):
         self.__environment.render(surface)
 
@@ -88,6 +93,7 @@ class GamePlayState(State):
 
         self.__player.render(surface)
         self.__enemies.render(surface)
+        self.__hud.render(surface)
 
     def quit(self):
         SoundPlayer.instance().stop_music()
@@ -109,3 +115,9 @@ class GamePlayState(State):
     def __kill_enemy(self, enemy):
         self.__enemies.remove(enemy)
         self.__pool.release(enemy)
+
+    def __get_kills(self):
+        return self.__interaction.kills
+
+    def __get_bullets(self):
+        return 10

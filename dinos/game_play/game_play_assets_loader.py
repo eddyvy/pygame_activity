@@ -12,9 +12,21 @@ class GamePlayAssetsLoader:
             self.__state,
             Config.get("game_play", "fps_stats", "fps_font")
         )
+        AssetManager.instance().font.load(
+            self.__state,
+            Config.get("game_play", "hud", "kills", "font")
+        )
+        AssetManager.instance().font.load(
+            self.__state,
+            Config.get("game_play", "hud", "bullets", "font")
+        )
         AssetManager.instance().image.load(
             self.__state,
             Config.get("game_play", "environment", "background", "image")
+        )
+        AssetManager.instance().image.load(
+            self.__state,
+            Config.get("game_play", "hud", "bullets", "image"),
         )
         AssetManager.instance().music.load(
             self.__state,

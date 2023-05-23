@@ -1,14 +1,16 @@
 {
   "font": "main",
+  "font_title": "title",
+  "font_title_color": [255, 255, 20],
   "music": "intro",
   "sfx_select": "select",
   "highlight_color": [0, 100, 255],
   "positions": {
-    "title": [480, 140],
-    "start": [480, 220],
-    "exit": [480, 280],
+    "title": [480, 150],
+    "start": [480, 230],
+    "exit": [480, 290],
     "score_text": [480, 40],
-    "score": [480, 60]
+    "score": [480, 80]
   },
   "text": {
     "en": {

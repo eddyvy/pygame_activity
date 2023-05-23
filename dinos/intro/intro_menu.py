@@ -16,13 +16,16 @@ class IntroMenu(GameAbstract):
         self.__inputs = InputKeyMap("select")
 
         font = AssetManager.instance().font.get(Config.get("intro", "font"))
+        font_title = AssetManager.instance().font.get(Config.get("intro", "font_title"))
         text = Config.get("intro", "text", Config.get("game", "language"))
         pos = Config.get("intro", "positions")
         fg_c = Config.get("game", "foreground_color")
         bg_c = Config.get("game", "background_color")
         hg_c = Config.get("intro", "highlight_color")
+        title_c = Config.get("intro", "font_title_color")
 
-        self.__title = UILabel(font, text["title"], pos["title"], fg_c, bg_c)
+        self.__title = UILabel(
+            font_title, text["title"], pos["title"], title_c, bg_c)
         self.__score_text = UILabel(
             font, text["score_text"], pos["score_text"], fg_c, bg_c)
         # TODO Read best score

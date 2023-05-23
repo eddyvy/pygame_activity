@@ -14,7 +14,8 @@
     "time_per_frame": 16,
     "refresh_update_time": 1000,
     "fps_pos": [70, 20],
-    "fps_font": "main"
+    "fps_font": "secondary",
+    "fps_color": [255, 43, 0]
   },
   "hero": {
     "spritesheet": "hero",
@@ -62,5 +63,20 @@
     "spawn_prob": 0.01,
     "jump_prob": 0.005,
     "dying_time": 1000
+  },
+  "hud": {
+    "kills": {
+      "font": "title",
+      "font_color": [227, 20, 58],
+      "position": [480, 50]
+    },
+    "bullets": {
+      "image": "bullet",
+      "image_position": [20, 35],
+      "font": "main",
+      "font_color": [255, 255, 20],
+      "font_position": [85, 50],
+      "font_size": 40
+    }
   }
 }
