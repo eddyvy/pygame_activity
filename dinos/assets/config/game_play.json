@@ -7,7 +7,8 @@
     "whip_hit",
     "jump_enemy",
     "dead",
-    "dead_enemy"
+    "dead_enemy",
+    "empty_gun"
   ],
   "fps_stats": {
     "fps": 60,
@@ -29,7 +30,8 @@
     "shoot_offset": -10,
     "hit_cd": 700,
     "hit_width": 70,
-    "hit_height": 60
+    "hit_height": 60,
+    "initial_bullets": 10
   },
   "platform": {
     "spritesheet": "ground",
@@ -61,6 +63,7 @@
     "spawn_pos_right": [1005, 450],
     "pool_size": 100,
     "spawn_prob": 0.01,
+    "spawn_prob_inc": 0.0003,
     "jump_prob": 0.005,
     "dying_time": 1000
   },

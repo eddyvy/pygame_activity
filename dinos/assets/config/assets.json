@@ -84,6 +84,9 @@
     },
     "dead_enemy": {
       "file": ["dinos.assets.sfx", "enemy_kill.mp3"]
+    },
+    "empty_gun": {
+      "file": ["dinos.assets.sfx", "empty_gun.wav"]
     }
   }
 }

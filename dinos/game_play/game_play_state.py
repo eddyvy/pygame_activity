@@ -69,7 +69,11 @@ class GamePlayState(State):
 
         SoundPlayer.instance().update(delta_time)
 
-        if random.random() <= Config.get("game_play", "dinos", "spawn_prob"):
+        if random.random() <= (
+            Config.get("game_play", "dinos", "spawn_prob") +
+            Config.get("game_play", "dinos", "spawn_prob_inc") *
+            self.__interaction.kills
+        ):
             self.__spawn_enemy()
 
         self.__player.update(delta_time)
@@ -120,4 +124,4 @@ class GamePlayState(State):
         return self.__interaction.kills
 
     def __get_bullets(self):
-        return 10
+        return self.__interaction.bullets

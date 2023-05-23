@@ -11,6 +11,8 @@ class PlayerEnemiesInteraction:
         self.__kill_enemy = kill_enemy_cb
         self.kills = 0
 
+        self.bullets = Config.get("game_play", "hero", "initial_bullets")
+
         self.__player.set_shoot_action(self.__hero_shoot)
         self.__player.set_hit_action(self.__hero_hit)
         self.__last_sy = 0
@@ -23,6 +25,11 @@ class PlayerEnemiesInteraction:
         return False
 
     def __hero_shoot(self, shoot_pos, shoot_dir):
+        if self.bullets <= 0:
+            SoundPlayer.instance().play_sound("empty_gun")
+            return False
+
+        self.bullets -= 1
         SoundPlayer.instance().play_sound("shoot")
 
         sh_x = shoot_pos[0]
