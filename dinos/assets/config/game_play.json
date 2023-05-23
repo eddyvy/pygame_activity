@@ -27,8 +27,8 @@
     "shoot_cd": 150,
     "shoot_offset": -10,
     "hit_cd": 700,
-    "hit_width": 40,
-    "hit_height": 30
+    "hit_width": 70,
+    "hit_height": 60
   },
   "platform": {
     "spritesheet": "ground",

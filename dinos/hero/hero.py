@@ -40,9 +40,8 @@ class Hero(HeroBody):
         self.__hit_cooldown = 0
         self.__hit_callback = None
         self.__hit_dir = self.__heading_dir
-        self.hit_rect = self.rect.copy()
-        self.hit_rect.w += self.__hit_width
-        self.hit_rect.h += self.__hit_height
+        self.hit_rect = pygame.Rect(0, 0, 0, 0)
+        self.hit_rect.center = self.rect.center
 
         self._center()
 
@@ -71,14 +70,6 @@ class Hero(HeroBody):
         self.__update_hitting(delta_time)
         self.__update_shooting(delta_time)
         super().update(delta_time)
-
-    def _render_debug(self, surface):
-        super()._render_debug(surface)
-        pygame.draw.rect(
-            surface, Config.get("game", "debug", "collider_color_2"),
-            self.hit_rect,
-            1
-        )
 
     def is_touching_ground(self):
         self.__is_on_air = self.__is_jumping
@@ -162,6 +153,8 @@ class Hero(HeroBody):
         if not self._is_hitting:
             return
 
+        self.hit_rect.w = self.__hit_width
+        self.hit_rect.h = self.__hit_height
         if self.__hit_dir == "right":
             self.hit_rect.left = self.rect.right
         elif self.__hit_dir == "left":
@@ -170,3 +163,5 @@ class Hero(HeroBody):
         self.__hit_cooldown -= delta_time
         if self.__hit_cooldown <= 0:
             self._is_hitting = False
+            self.hit_rect.w = 0
+            self.hit_rect.h = 0
