@@ -71,7 +71,7 @@
       "file": ["dinos.assets.sfx", "dead.wav"]
     },
     "dead_enemy": {
-      "file": ["dinos.assets.sfx", "dead_enemy.wav"]
+      "file": ["dinos.assets.sfx", "enemy_kill.mp3"]
     }
   }
 }

@@ -6,20 +6,17 @@ from dinos.common.render_group import RenderGroup
 from dinos.config import Config
 from dinos.dinosaurs.dino import Dino
 from dinos.dinosaurs.pool import Pool
-from dinos.environment.platform import Platform
 from dinos.game_play.game_play_assets_loader import GamePlayAssetsLoader
 from dinos.game_play.game_play_environment import GamePlayEnvironment
 
 from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.hero.hero import Hero
-from dinos.resources.asset_manager import AssetManager
 from dinos.resources.sound_player import SoundPlayer
 from dinos.state.state import StateTypes
 from dinos.game_play.fps_stats import FPSStats
 
 
 class GamePlayState(State):
-    __STATE = StateTypes.GamePlay
 
     def __init__(self):
         super().__init__()
@@ -116,18 +113,22 @@ class GamePlayState(State):
         self.__last_sy = sh_y
 
         for enemy in self.__enemies.sprites():
+            if enemy.is_dying:
+                continue
+
             on_height = sh_y >= enemy.rect.top and sh_y <= enemy.rect.bottom
             if on_height:
-                enemy_dist = sh_x - enemy.position.x
+                enemy_dist = int(sh_x - enemy.position.x)
                 if (
-                    (is_left and enemy_dist > 0) and (closer_enemy_dist == None or abs(closer_enemy_dist) > abs(enemy_dist)) or
+                    (is_left and enemy_dist > 0) and (closer_enemy_dist == None or closer_enemy_dist > enemy_dist) or
                     ((not is_left and enemy_dist < 0) and (closer_enemy_dist ==
-                     None or abs(closer_enemy_dist) > abs(enemy_dist)))
+                     None or closer_enemy_dist < enemy_dist))
                 ):
                     closer_enemy = enemy
+                    closer_enemy_dist = enemy_dist
 
         if closer_enemy != None:
-            self.__kill_enemy(closer_enemy)
+            closer_enemy.die(self.__kill_enemy)
 
         return True
 

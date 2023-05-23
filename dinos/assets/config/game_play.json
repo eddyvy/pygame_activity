@@ -25,7 +25,7 @@
     "spawn_position": [480, 200],
     "jump_speed": 0.4,
     "shoot_cd": 150,
-    "shoot_offset": -4,
+    "shoot_offset": -10,
     "hit_cd": 700,
     "hit_width": 40,
     "hit_height": 30
@@ -60,6 +60,7 @@
     "spawn_pos_right": [1005, 450],
     "pool_size": 100,
     "spawn_prob": 0.01,
-    "jump_prob": 0.005
+    "jump_prob": 0.005,
+    "dying_time": 1000
   }
 }

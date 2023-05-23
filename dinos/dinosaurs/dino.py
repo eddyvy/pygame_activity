@@ -33,6 +33,10 @@ class Dino(DinoBody):
 
         self.__get_target_pos = get_target_pos_cb
 
+        self.is_dying = False
+        self.__dying_time = Config.get("game_play", "dinos", "dying_time")
+        self.__die_callback = None
+
         self._center()
 
     def reset(self):
@@ -50,19 +54,34 @@ class Dino(DinoBody):
         self._is_jumping = False
         self.__is_on_air = True
 
+        self.is_dying = False
+        self.__dying_time = Config.get("game_play", "dinos", "dying_time")
+        self.__die_callback = None
+
         self.position.x = newpos[0]
         self.position.y = newpos[1]
         self._center()
 
     def update(self, delta_time):
-        if random.random() <= self.__jump_prob:
-            self.__jump()
+        if self.is_dying:
+            self.__dying_time -= delta_time
+            if self.__dying_time <= 0:
+                self.__die_callback(self)
+        else:
+            if random.random() <= self.__jump_prob:
+                self.__jump()
 
-        self.__update_movement(delta_time)
+            self.__update_movement(delta_time)
+
         super().update(delta_time)
 
     def is_touching_ground(self):
         self.__is_on_air = self._is_jumping
+
+    def die(self, callback):
+        self.is_dying = True
+        self.__die_callback = callback
+        SoundPlayer.instance().play_sound("dead_enemy")
 
     def __jump(self):
         if not self.__is_on_air:
