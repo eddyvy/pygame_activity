@@ -36,7 +36,7 @@ class Hero(HeroBody):
         self.__shoot_callback = None
         self.__shoot_dir = self.__heading_dir
 
-        self._is_hitting = False
+        self.is_hitting = False
         self.__hit_cooldown = 0
         self.__hit_callback = None
         self.__hit_dir = self.__heading_dir
@@ -121,7 +121,7 @@ class Hero(HeroBody):
         )
 
     def __shoot(self):
-        if self.__shoot_cooldown > 0 or self.__shoot_callback == None or self._is_hitting:
+        if self.__shoot_cooldown > 0 or self.__shoot_callback == None or self.is_hitting:
             return
 
         self.__shoot_dir = self.__heading_dir
@@ -144,14 +144,6 @@ class Hero(HeroBody):
             return
 
         self.__hit_dir = self.__heading_dir
-        if self.__hit_callback(self.hit_rect):
-            self._is_hitting = True
-            self.__hit_cooldown = self.__hit_cd
-
-    def __update_hitting(self, delta_time):
-        self.hit_rect.center = self.position.xy + self._render_offset
-        if not self._is_hitting:
-            return
 
         self.hit_rect.w = self.__hit_width
         self.hit_rect.h = self.__hit_height
@@ -160,8 +152,22 @@ class Hero(HeroBody):
         elif self.__hit_dir == "left":
             self.hit_rect.right = self.rect.left
 
+        if self.__hit_callback(self.hit_rect):
+            self.is_hitting = True
+            self.__hit_cooldown = self.__hit_cd
+
+    def __update_hitting(self, delta_time):
+        self.hit_rect.center = self.position.xy + self._render_offset
+        if not self.is_hitting:
+            return
+
+        if self.__hit_dir == "right":
+            self.hit_rect.left = self.rect.right
+        elif self.__hit_dir == "left":
+            self.hit_rect.right = self.rect.left
+
         self.__hit_cooldown -= delta_time
         if self.__hit_cooldown <= 0:
-            self._is_hitting = False
+            self.is_hitting = False
             self.hit_rect.w = 0
             self.hit_rect.h = 0

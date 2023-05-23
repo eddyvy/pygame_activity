@@ -82,6 +82,7 @@ class GamePlayState(State):
         self.__enemies.update(delta_time)
         self.__environment.check_ground_spritegroup(self.__enemies)
 
+        self.__interaction.update_hit()
         if self.__interaction.check_player_dead():
             # TODO kill player
             pass

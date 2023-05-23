@@ -65,7 +65,9 @@
     "spawn_prob": 0.01,
     "spawn_prob_inc": 0.0003,
     "jump_prob": 0.005,
-    "dying_time": 1000
+    "dying_time": 1000,
+    "hit_speed": [1, 0.25],
+    "hit_duration": 500
   },
   "hud": {
     "kills": {

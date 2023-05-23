@@ -31,6 +31,13 @@ class Dino(DinoBody):
         self._is_jumping = False
         self.__is_on_air = True
 
+        self.is_hit = False
+        self._is_hit_dir = "right"
+        self.__hit_speed_x = Config.get("game_play", "dinos", "hit_speed")[0]
+        self.__hit_speed_y = Config.get("game_play", "dinos", "hit_speed")[1]
+        self.__hit_duration = Config.get("game_play", "dinos", "hit_duration")
+        self.__hit_cooldown = 0
+
         self.__get_target_pos = get_target_pos_cb
 
         self.is_dying = False
@@ -53,6 +60,9 @@ class Dino(DinoBody):
         self._velocity = pygame.math.Vector2(0.0, 0.0)
         self._is_jumping = False
         self.__is_on_air = True
+
+        self.is_hit = False
+        self._hit_dir = "right"
 
         self.is_dying = False
         self.__dying_time = Config.get("game_play", "dinos", "dying_time")
@@ -82,6 +92,11 @@ class Dino(DinoBody):
         self.is_dying = True
         self.__die_callback = callback
         SoundPlayer.instance().play_sound("dead_enemy")
+
+    def hit(self, direction):
+        self.is_hit = True
+        self._hit_dir = direction
+        self.__hit_cooldown = self.__hit_duration
 
     def __jump(self):
         if not self.__is_on_air:
@@ -114,5 +129,14 @@ class Dino(DinoBody):
                 self.__is_on_air = True
             else:
                 self._velocity.y = 0
+
+        if self.is_hit:
+            if self.__hit_cooldown <= 0:
+                self.is_hit = False
+            else:
+                self.__hit_cooldown -= delta_time
+            self._velocity.x = self.__hit_speed_x if self._hit_dir == "left" else -self.__hit_speed_x
+            self._velocity.y = - self.__hit_speed_y
+            self.__is_on_air = True
 
         self.position += self._velocity * delta_time

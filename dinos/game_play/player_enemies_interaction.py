@@ -24,6 +24,15 @@ class PlayerEnemiesInteraction:
             return True
         return False
 
+    def update_hit(self):
+        if not self.__player.is_hitting:
+            return
+
+        for enemy in self.__enemies.sprites():
+            if enemy.rect.colliderect(self.__player.hit_rect):
+                dir = "right" if self.__player.position.x >= enemy.position.x else "left"
+                enemy.hit(dir)
+
     def __hero_shoot(self, shoot_pos, shoot_dir):
         if self.bullets <= 0:
             SoundPlayer.instance().play_sound("empty_gun")
@@ -63,7 +72,16 @@ class PlayerEnemiesInteraction:
         return True
 
     def __hero_hit(self, hit_rect):
-        SoundPlayer.instance().play_sound("whip")
+        first_hits = False
+        for enemy in self.__enemies.sprites():
+            if enemy.rect.colliderect(hit_rect):
+                first_hits = True
+                break
+        if first_hits:
+            SoundPlayer.instance().play_sound("whip_hit")
+        else:
+            SoundPlayer.instance().play_sound("whip")
+
         return True
 
     def render_debug(self, surface):

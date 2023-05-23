@@ -54,7 +54,7 @@ class HeroBody(GameObject):
                 self.__animations.animate_once("shoot_left")
             elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
                 self.__animations.animate_once("shoot_right")
-        elif self._is_hitting:
+        elif self.is_hitting:
             if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
                 self.__animations.animate_once("hit_left")
             elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):
