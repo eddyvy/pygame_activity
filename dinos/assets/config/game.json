@@ -13,5 +13,6 @@
   "physics": {
     "gravity": 0.01,
     "max_falling_speed": 0.5
-  }
+  },
+  "save_file": ["dinos", "score.txt"]
 }

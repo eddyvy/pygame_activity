@@ -3,6 +3,7 @@ from dinos.common.input_key_map import InputKeyMap
 from dinos.config import Config
 from dinos.resources.asset_manager import AssetManager
 from dinos.resources.sound_player import SoundPlayer
+from dinos.game_saving import GameSaving
 from dinos.ui.label import UILabel
 from dinos.ui.label_selectable import UILabelSelectable
 
@@ -28,8 +29,8 @@ class IntroMenu(GameAbstract):
             font_title, text["title"], pos["title"], title_c, bg_c)
         self.__score_text = UILabel(
             font, text["score_text"], pos["score_text"], fg_c, bg_c)
-        # TODO Read best score
-        self.__score = UILabel(font, "0", pos["score"], fg_c, bg_c)
+        self.__score = UILabel(
+            font, str(GameSaving.instance().load_score()), pos["score"], fg_c, bg_c)
         self.__start_game = UILabelSelectable(
             font, text["start"], pos["start"], fg_c, bg_c, hg_c)
         self.__exit_game = UILabelSelectable(

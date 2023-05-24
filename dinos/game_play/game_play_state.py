@@ -14,6 +14,7 @@ from dinos.game_play.game_play_mode import GamePlayMode
 from dinos.game_play.player_enemies_interaction import PlayerEnemiesInteraction
 from dinos.hero.hero import Hero
 from dinos.resources.sound_player import SoundPlayer
+from dinos.game_saving import GameSaving
 from dinos.state.state import StateTypes
 
 
@@ -22,6 +23,8 @@ class GamePlayState(State):
     def __init__(self):
         super().__init__()
         self.next_state = StateTypes.Intro
+
+        self.__best_score = GameSaving.instance().load_score()
 
         self.__assets_loader = GamePlayAssetsLoader()
         self.__environment = GamePlayEnvironment()
@@ -137,3 +140,6 @@ class GamePlayState(State):
 
     def __game_over(self):
         print("Game Over")
+        if (self.__best_score < self.__interaction.kills):
+            self.__best_score = self.__interaction.kills
+            GameSaving.instance().save_score(self.__interaction.kills)
