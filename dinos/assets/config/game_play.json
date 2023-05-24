@@ -31,7 +31,8 @@
     "shoot_offset": -10,
     "hit_cd": 700,
     "hit_width": 70,
-    "hit_height": 60
+    "hit_height": 60,
+    "dying_time": 3000
   },
   "platform": {
     "spritesheet": "ground",

@@ -47,7 +47,7 @@ class Hero(HeroBody):
 
         self.is_dying = False
         self.is_dead = False
-        self.__dying_time = Config.get("game_play", "dinos", "dying_time")
+        self.__dying_time = Config.get("game_play", "hero", "dying_time")
         self.__die_callback = None
 
     def handle_event(self, event):

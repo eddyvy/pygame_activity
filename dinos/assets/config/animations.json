@@ -11,8 +11,8 @@
         "duration": 1000
       },
       "jump_right": {
-        "sequence": [9],
-        "duration": null
+        "sequence": [8, 9, 10, 11, 12],
+        "duration": 1000
       },
       "roll_right": {
         "sequence": [16, 17, 18, 19, 20, 21, 22],

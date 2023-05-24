@@ -4,6 +4,7 @@
   "font_title_color": [255, 255, 20],
   "music": "intro",
   "sfx_select": "select",
+  "spritesheet": "hero",
   "highlight_color": [0, 100, 255],
   "positions": {
     "title": [480, 150],
@@ -18,6 +19,24 @@
       "start": "Start Game",
       "exit": "Exit Game",
       "score_text": "BEST SCORE"
+    }
+  },
+  "tutorial": {
+    "animations": "hero",
+    "jump": {
+      "position": [80, 370],
+      "animation": "jump_right",
+      "text_position": [155, 480]
+    },
+    "hit": {
+      "position": [380, 370],
+      "animation": "hit_right",
+      "text_position": [455, 480]
+    },
+    "shoot": {
+      "position": [680, 370],
+      "animation": "shoot_left",
+      "text_position": [755, 480]
     }
   }
 }

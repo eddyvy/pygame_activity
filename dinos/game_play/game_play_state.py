@@ -91,8 +91,10 @@ class GamePlayState(State):
         self.__environment.check_ground_spritegroup(self.__enemies)
 
         self.__interaction.update_hit()
-        if self.__interaction.check_player_dead():
-            self.__player.die(self.__game_over)
+
+        if not self.__mode.debug:
+            if self.__interaction.check_player_dead():
+                self.__player.die(self.__game_over)
 
         self.__hud.update(delta_time)
 
@@ -143,3 +145,4 @@ class GamePlayState(State):
         if (self.__best_score < self.__interaction.kills):
             self.__best_score = self.__interaction.kills
             GameSaving.instance().save_score(self.__interaction.kills)
+        self.done = True
