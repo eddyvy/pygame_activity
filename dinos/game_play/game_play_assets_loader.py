@@ -28,6 +28,10 @@ class GamePlayAssetsLoader:
             self.__state,
             Config.get("game_play", "hud", "bullets", "image"),
         )
+        AssetManager.instance().image.load(
+            self.__state,
+            Config.get("game_play", "bullet", "image")
+        )
         AssetManager.instance().music.load(
             self.__state,
             Config.get("game_play", "music")

@@ -5,13 +5,12 @@ from dinos.resources.sound_player import SoundPlayer
 
 class PlayerEnemiesInteraction:
 
-    def __init__(self, player, enemies, kill_enemy_cb):
+    def __init__(self, player, enemies, kill_enemy_cb, bullet_manager):
         self.__player = player
         self.__enemies = enemies
         self.__kill_enemy = kill_enemy_cb
+        self.__bullet_manager = bullet_manager
         self.kills = 0
-
-        self.bullets = Config.get("game_play", "hero", "initial_bullets")
 
         self.__player.set_shoot_action(self.__hero_shoot)
         self.__player.set_hit_action(self.__hero_hit)
@@ -31,14 +30,16 @@ class PlayerEnemiesInteraction:
         for enemy in self.__enemies.sprites():
             if enemy.rect.colliderect(self.__player.hit_rect):
                 dir = "right" if self.__player.position.x >= enemy.position.x else "left"
+                if not enemy.is_hit:
+                    self.__bullet_manager.spawn_bullet(enemy.position.copy())
                 enemy.hit(dir)
 
     def __hero_shoot(self, shoot_pos, shoot_dir):
-        if self.bullets <= 0:
+        if self.__bullet_manager.num <= 0:
             SoundPlayer.instance().play_sound("empty_gun")
             return False
 
-        self.bullets -= 1
+        self.__bullet_manager.num -= 1
         SoundPlayer.instance().play_sound("shoot")
 
         sh_x = shoot_pos[0]

@@ -18,9 +18,13 @@
       "file": ["dinos.assets.images", "background.png"],
       "size": [960, 540]
     },
-    "bullet": {
+    "bullet_hud": {
       "file": ["dinos.assets.images", "bullet.png"],
       "size": [30, 30]
+    },
+    "bullet": {
+      "file": ["dinos.assets.images", "bullet.png"],
+      "size": [25, 25]
     }
   },
   "spritesheet": {
@@ -87,6 +91,9 @@
     },
     "empty_gun": {
       "file": ["dinos.assets.sfx", "empty_gun.wav"]
+    },
+    "new_bullet": {
+      "file": ["dinos.assets.sfx", "new_bullet.wav"]
     }
   }
 }

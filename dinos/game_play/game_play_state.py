@@ -1,10 +1,11 @@
 import random
 from sre_parse import State
+from dinos.bullets.bullet_manager import BulletManager
 
 from dinos.common.render_group import RenderGroup
 from dinos.config import Config
 from dinos.dinosaurs.dino import Dino
-from dinos.dinosaurs.pool import Pool
+from dinos.common.pool import Pool
 from dinos.game_play.fps_stats import FPSStats
 from dinos.game_play.game_play_assets_loader import GamePlayAssetsLoader
 from dinos.game_play.game_play_environment import GamePlayEnvironment
@@ -25,8 +26,8 @@ class GamePlayState(State):
         self.__assets_loader = GamePlayAssetsLoader()
         self.__environment = GamePlayEnvironment()
 
-        self.__last_sy = 0
         self.__enemies = RenderGroup()
+        self.__bullets = RenderGroup()
 
     def enter(self):
         self.done = False
@@ -47,8 +48,9 @@ class GamePlayState(State):
             self.__enemies_target_pos
         )
 
+        self.__bullet_manager = BulletManager(self.__bullets)
         self.__interaction = PlayerEnemiesInteraction(
-            self.__player, self.__enemies, self.__kill_enemy)
+            self.__player, self.__enemies, self.__kill_enemy, self.__bullet_manager)
 
         self.__hud = GamePlayHUD(self.__get_kills, self.__get_bullets)
 
@@ -76,8 +78,11 @@ class GamePlayState(State):
         ):
             self.__spawn_enemy()
 
+        self.__bullets.update(delta_time)
+
         self.__player.update(delta_time)
         self.__environment.check_ground_sprite(self.__player)
+        self.__bullet_manager.check_player_touch(self.__player)
 
         self.__enemies.update(delta_time)
         self.__environment.check_ground_spritegroup(self.__enemies)
@@ -96,6 +101,7 @@ class GamePlayState(State):
             self.__fps_stats.render(surface)
             self.__interaction.render_debug(surface)
 
+        self.__bullets.render(surface)
         self.__player.render(surface)
         self.__enemies.render(surface)
         self.__hud.render(surface)
@@ -104,9 +110,12 @@ class GamePlayState(State):
         SoundPlayer.instance().stop_music()
         self.__player.quit()
         self.__enemies.empty()
+        self.__bullets.empty()
         self.__environment.quit()
         self.__mode.quit()
         self.__fps_stats.quit()
+        self.__pool.empty()
+        self.__bullet_manager.quit()
         self.__assets_loader.unload()
 
     def __enemies_target_pos(self):
@@ -125,4 +134,4 @@ class GamePlayState(State):
         return self.__interaction.kills
 
     def __get_bullets(self):
-        return self.__interaction.bullets
+        return self.__bullet_manager.num
