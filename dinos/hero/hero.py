@@ -45,7 +45,15 @@ class Hero(HeroBody):
 
         self._center()
 
+        self.is_dying = False
+        self.is_dead = False
+        self.__dying_time = Config.get("game_play", "dinos", "dying_time")
+        self.__die_callback = None
+
     def handle_event(self, event):
+        if self.is_dying or self.is_dead:
+            return
+
         if self._inputs.is_released(event, "left"):
             self._is_moving_left = False
         if self._inputs.is_released(event, "right"):
@@ -66,6 +74,13 @@ class Hero(HeroBody):
             self.__hit()
 
     def update(self, delta_time):
+        if self.is_dying and not self.is_dead:
+            self.__dying_time -= delta_time
+            if self.__dying_time <= 0:
+                self.__die_callback()
+                self.is_dead = True
+                self.is_dying = False
+
         self.__update_movement(delta_time)
         self.__update_hitting(delta_time)
         self.__update_shooting(delta_time)
@@ -79,6 +94,15 @@ class Hero(HeroBody):
 
     def set_hit_action(self, hit_callback):
         self.__hit_callback = hit_callback
+
+    def die(self, callback):
+        if self.is_dying or self.is_dead:
+            return
+        self.is_dying = True
+        self.__die_callback = callback
+        self._is_moving_left = False
+        self._is_moving_right = False
+        SoundPlayer.instance().play_sound("dead")
 
     def __jump(self):
         if not self.__is_on_air:

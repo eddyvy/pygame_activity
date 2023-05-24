@@ -18,7 +18,7 @@ class PlayerEnemiesInteraction:
 
     def check_player_dead(self):
         for enemy in pygame.sprite.spritecollide(self.__player, self.__enemies, False):
-            if enemy.is_dying:
+            if enemy.is_dying or enemy.is_hit:
                 continue
             return True
         return False

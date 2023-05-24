@@ -49,7 +49,17 @@ class HeroBody(GameObject):
         current_is_left = "left" in self.__animations.get_current_animation_name()
         current_is_right = "right" in self.__animations.get_current_animation_name()
 
-        if self._is_shooting:
+        if self.is_dead:
+            if current_is_left:
+                self.__animations.animate("dead_left")
+            elif current_is_right:
+                self.__animations.animate("dead_right")
+        elif self.is_dying:
+            if current_is_left:
+                self.__animations.animate_once("die_left")
+            elif current_is_right:
+                self.__animations.animate_once("die_right")
+        elif self._is_shooting:
             if self._velocity.x < 0 or (self._velocity.x == 0 and current_is_left):
                 self.__animations.animate_once("shoot_left")
             elif self._velocity.x > 0 or (self._velocity.x == 0 and current_is_right):

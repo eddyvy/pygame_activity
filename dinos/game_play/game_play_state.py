@@ -89,8 +89,7 @@ class GamePlayState(State):
 
         self.__interaction.update_hit()
         if self.__interaction.check_player_dead():
-            # TODO kill player
-            pass
+            self.__player.die(self.__game_over)
 
         self.__hud.update(delta_time)
 
@@ -135,3 +134,6 @@ class GamePlayState(State):
 
     def __get_bullets(self):
         return self.__bullet_manager.num
+
+    def __game_over(self):
+        print("Game Over")

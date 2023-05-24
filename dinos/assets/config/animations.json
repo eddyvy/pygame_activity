@@ -32,7 +32,11 @@
       },
       "die_right": {
         "sequence": [48, 49, 50, 51, 52],
-        "duration": 1000
+        "duration": 3000
+      },
+      "dead_right": {
+        "sequence": [52],
+        "duration": null
       },
       "idle_left": { "reverse": "idle_right" },
       "walk_left": { "reverse": "walk_right" },
@@ -41,7 +45,8 @@
       "hit_left": { "reverse": "hit_right" },
       "hit_long_left": { "reverse": "hit_long_right" },
       "shoot_left": { "reverse": "shoot_right" },
-      "die_left": { "reverse": "die_right" }
+      "die_left": { "reverse": "die_right" },
+      "dead_left": { "reverse": "dead_right" }
     }
   },
   "dino_green": {
