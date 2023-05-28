@@ -10,3 +10,9 @@ pipenv shell
 pipenv --python 3.9
 pipenv install -e .
 ```
+
+## Crear ejecutable
+
+```sh
+pyinstaller dinos/__main__.py --onefile --noconsole --collect-all dinos
+```
